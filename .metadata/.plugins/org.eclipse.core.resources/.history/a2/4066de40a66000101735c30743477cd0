@@ -1,0 +1,29 @@
+package br.com.eccomerce.dao;
+
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.List;
+
+import br.com.eccomerce.model.Produto;
+
+public class ProdutoDAO {
+	
+	public void saveProduto(Produto produto) {
+		
+	}
+	
+	public List<Produto> getProduto(Produto produto){
+		List<Produto> listaProduto = new ArrayList<Produto>();
+		
+		
+		return listaProduto;
+	}
+
+	public void updateProduto(Produto produto) {
+	
+	}
+	
+	public void deleteProduto(Produto produto) {
+		
+	}
+}

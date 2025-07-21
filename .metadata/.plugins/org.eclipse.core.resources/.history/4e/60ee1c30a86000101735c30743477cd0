@@ -1,0 +1,5 @@
+package br.com.eccomerce.dao;
+
+public class PedidoDAO {
+
+}

@@ -1,0 +1,36 @@
+package br.com.eccomerce.model;
+
+import java.time.LocalDate;
+import java.util.Date;
+
+public class Pedido {
+	private int PED_CODIGO;
+	private int CLI_CODIGO;
+	private Date PED_DATA;
+	
+	public int getPED_CODIGO() {
+		return PED_CODIGO;
+	}
+	public void setPED_CODIGO(int pED_CODIGO) {
+		PED_CODIGO = pED_CODIGO;
+	}
+	public int getCLI_CODIGO() {
+		return CLI_CODIGO;
+	}
+	public void setCLI_CODIGO(int cLI_CODIGO) {
+		CLI_CODIGO = cLI_CODIGO;
+	}
+	public Date getPED_DATA() {
+		return PED_DATA;
+	}
+	public void setPED_DATA(Date pED_DATA) {
+		PED_DATA = pED_DATA;
+	}
+
+	public Pedido(int cliente, Date date) {
+		this.CLI_CODIGO = cliente;
+		this.PED_DATA = date;
+	}
+	
+	public Pedido() {}
+}
