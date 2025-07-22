@@ -361,7 +361,7 @@ public class TerminalGUI {
 		int codigo = leitor.nextInt();
 		
 		Pedido pedido = PedidoDAO.listPedido(codigo);
-		List<ProdutoPedido> produtosPedidosAntigos = ProdutoPedidoDAO.listProdutoPedido(codigo);
+		List<ProdutoPedido> produtosPedidos = ProdutoPedidoDAO.listProdutoPedido(codigo);
 		
 		int codigoCliente, codigoProduto;
 		int nItens;
@@ -381,13 +381,9 @@ public class TerminalGUI {
 			System.out.print("QUANTIDADE: ");
 			qtdeProduto = leitor.nextInt();
 			
-			ProdutoPedido produtoPedido = new ProdutoPedido(pedido.getPED_CODIGO(), codigoProduto, qtdeProduto);
-			ProdutoPedidoDAO.saveProdutoPedido(produtoPedido);
-		}
-		
-		
-		for(ProdutoPedido item : produtosPedidosAntigos) {
-			ProdutoPedidoDAO.deleteProdutoPedido(item);
+			produtosPedidos.get(i).setPRO_CODIGO(codigoProduto);
+			produtosPedidos.get(i).setPRP_QUANTIDADE(qtdeProduto);
+			ProdutoPedidoDAO.updateProdutoPedido(produtosPedidos.get(i));
 		}
 		
 	}

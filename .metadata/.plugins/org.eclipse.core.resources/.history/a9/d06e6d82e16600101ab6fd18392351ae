@@ -1,10 +1,19 @@
 package br.com.eccomerce.gui;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.Scanner;
 
 import br.com.eccomerce.dao.ProdutoDAO;
+import br.com.eccomerce.dao.ClienteDAO;
+import br.com.eccomerce.dao.PedidoDAO;
+import br.com.eccomerce.dao.ProdutoPedidoDAO;
+import br.com.eccomerce.model.Cliente;
 import br.com.eccomerce.model.Produto;
+import br.com.eccomerce.model.Pedido;
+import br.com.eccomerce.model.ProdutoPedido;
+import br.com.eccomerce.model.Venda;
 
 public class TerminalGUI {
 	public static void menu() {
@@ -55,8 +64,9 @@ public class TerminalGUI {
 								+ "2. ADICIONAR PRODUTO\n"
 								+ "3. EXCLUIR PRODUTO\n"
 								+ "4. MODIFICAR PRODUTO\n"
-								+ "5. PROCURAR PRODUTO\n"
-								+ "6. VOLTAR\n"
+								+ "5. PROCURAR PRODUTO PELO NOME\n"
+								+ "6. PROCURAR PRODUTO PELO PREÇO\n"
+								+ "7. VOLTAR\n"
 								+ "Sua escolha: ");
 			escolha = leitor.nextInt();
 			System.out.println();
@@ -75,9 +85,12 @@ public class TerminalGUI {
 				modificarProduto();
 				break;
 			case 5:
-				procurarProduto();
+				procurarNomeProduto();
 				break;
 			case 6:
+				procurarPrecoProduto();
+				break;
+			case 7:
 				System.out.println("Voltando...");
 				continuar = false;
 				break;
@@ -106,7 +119,7 @@ public class TerminalGUI {
 			
 			switch(escolha) {
 			case 1:
-				listarPeidido();
+				listarPedido();
 				break;
 			case 2:
 				adicionarPeidido();
@@ -115,7 +128,7 @@ public class TerminalGUI {
 				excluirPeidido();
 				break;
 			case 4:
-				modificarPeidido();
+				modificarPedido();
 				break;
 			case 5:
 				System.out.println("Voltando...");
@@ -127,7 +140,7 @@ public class TerminalGUI {
 			}
 		}
 	}
-	
+
 	private static void menuCliente() {
 		Scanner leitor = new Scanner(System.in);
 		
@@ -167,6 +180,7 @@ public class TerminalGUI {
 			}
 		}
 	}
+	
 	
 	// PRODUTO
 	private static void listarProduto() {
@@ -232,13 +246,22 @@ public class TerminalGUI {
 		if(resposta.toCharArray()[0] == 'S' || resposta.toCharArray()[0] == 's') {
 			
 			System.out.print("NOVO NOME: ");
-			produto.setPRO_NOME(leitor.nextLine());
+			leitor.nextLine();
+			String nome = leitor.nextLine();
+			
 			System.out.print("NOVA DESCRIÇÃO: ");
-			produto.setPRO_DESCRICAO(leitor.nextLine());
+			String descricao = leitor.nextLine();
+			
 			System.out.print("NOVO VALOR: R$");
-			produto.setPRO_VALOR(leitor.nextDouble());
+			double valor = leitor.nextDouble();
+			
 			System.out.print("NOVO ESTOQUE: ");
-			produto.setPRO_ESTOQUE(leitor.nextInt());
+			int estoque = leitor.nextInt();
+			
+			produto.setPRO_NOME(nome);
+			produto.setPRO_DESCRICAO(descricao);
+			produto.setPRO_VALOR(valor);
+			produto.setPRO_ESTOQUE(estoque);
 			
 			ProdutoDAO.updateProduto(produto);
 		}
@@ -275,4 +298,159 @@ public class TerminalGUI {
 		for(Produto produto : produtos) {
 			System.out.println(produto.toString());
 		}
+	}
+
+	// PEDIDO
+	private static void listarPedido(){
+		List<Pedido> pedidos = PedidoDAO.listPedido();
+		
+		for(Pedido pedido : pedidos) {
+			Venda venda = new Venda(pedido.getPED_CODIGO());
+			System.out.println(venda.toString());
+		}
+	}
+	
+	private static void adicionarPeidido() {
+		Scanner leitor = new Scanner(System.in);
+		
+		int codigoCliente, codigoProduto;
+		int nItens;
+		int qtdeProduto;
+		
+		System.out.println("CODIGO DO CLIENTE: ");
+		codigoCliente = leitor.nextInt();
+		System.out.println("NUMERO DE ITENS: ");
+		nItens = leitor.nextInt();
+		
+		Date dataAtual = new Date();
+		Pedido pedido = new Pedido(codigoCliente, dataAtual);
+		PedidoDAO.savePedido(pedido);
+		
+		for(int i = 0; i < nItens; i++) {
+			System.out.println("CODIGO DO PRODUTO: ");
+			codigoProduto = leitor.nextInt();
+			System.out.println("QUANTIDADE: ");
+			qtdeProduto = leitor.nextInt();
+			
+			Pedido ultimoPedido = PedidoDAO.getLastPedido();
+			ProdutoPedido produtoPedido = new ProdutoPedido(ultimoPedido.getPED_CODIGO(), codigoProduto, qtdeProduto);
+			System.out.println("\n\n Cogigo: " + ultimoPedido.getPED_CODIGO()
+					+ "\n\n");
+			ProdutoPedidoDAO.saveProdutoPedido(produtoPedido);
+		}
+	}
+	
+	private static void excluirPeidido() {
+		Scanner leitor = new Scanner(System.in);
+		
+		System.out.print("Digite o código do pedido: ");
+		int codigo = leitor.nextInt();
+		Pedido pedido = PedidoDAO.listPedido(codigo);
+		
+		
+		List<ProdutoPedido> produtosPedidos = ProdutoPedidoDAO.listProdutoPedido(codigo);
+		for(ProdutoPedido item : produtosPedidos) {
+			ProdutoPedidoDAO.deleteProdutoPedido(item);
+		}
+		
+		PedidoDAO.deletePedido(pedido);
+	}
+	
+	private static void modificarPedido() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	// CLIENTE
+	private static void listarCliente() {
+		List<Cliente> clientes = ClienteDAO.getCliente();
+		
+		for(Cliente cliente : clientes) {
+			System.out.println(cliente.toString());
+		}
+		
+	}
+
+	private static void adicionarCliente() {
+		Scanner leitor = new Scanner(System.in);
+		
+		System.out.print("Nome: ");
+		String nome = leitor.nextLine();
+		
+		System.out.print("Email: ");
+		String email = leitor.nextLine();
+		
+		System.out.print("Endereco: ");
+		String endereco = leitor.nextLine();
+		
+		System.out.print("Telefone: ");
+		String telefone= leitor.nextLine();
+		
+		Cliente cliente = new Cliente(nome, email, endereco, telefone);
+		
+		ClienteDAO.saveCliente(cliente);
+		
+	}
+
+	private static void excluirCliente() {
+		Scanner leitor = new Scanner(System.in);
+		
+		System.out.print("CODIGO DO CLIENTE: ");
+		int codigo = leitor.nextInt();
+		
+		Cliente cliente = ClienteDAO.getCliente(codigo);
+		
+		System.out.println(cliente.toString());
+		System.out.print("Deseja excluir(S/N)?  ");
+		String resposta = leitor.next();
+		
+		if(resposta.toCharArray()[0] == 'S' || resposta.toCharArray()[0] == 's') {
+			ClienteDAO.deleteCliente(cliente);
+		}
+		else {
+			System.out.println("Nenhum Cliente foi excluido");
+		}
+		
+	}
+
+	private static void modificarCliente() {
+		Scanner leitor = new Scanner(System.in);
+		
+		System.out.print("CODIGO DO CLIENTE: ");
+		int codigo = leitor.nextInt();
+		
+		Cliente cliente= ClienteDAO.getCliente(codigo);
+		
+		System.out.println(cliente.toString());
+		System.out.print("Deseja modificar(S/N)?  ");
+		String resposta = leitor.next();
+		
+		if(resposta.toCharArray()[0] == 'S' || resposta.toCharArray()[0] == 's') {
+			
+			System.out.print("NOVO NOME: ");
+			leitor.nextLine();
+			String nome = leitor.nextLine();
+			
+			System.out.print("NOVA EMAIL: ");
+			String email = leitor.nextLine();
+			
+			System.out.print("NOVO ENDERECO: ");
+			String endereco = leitor.nextLine();
+			
+			System.out.print("NOVO TELEFONE: ");
+			String telefone = leitor.nextLine();
+			
+			cliente.setCLI_NOME(nome);
+			cliente.setCLI_EMAIL(email);
+			cliente.setCLI_ENDERECO(endereco);
+			cliente.setCLI_TELEFONE(telefone);
+			
+			ClienteDAO.updateCliente(cliente);
+		}
+		else {
+			System.out.println("Nenhum cliente foi modificado");
+			return;
+		}
+		
+	}
 }
