@@ -102,7 +102,7 @@ public class ClienteDAO {
 		return clientes;
 	}
 
-	public static Cliente getCliente(int codigoCliente){
+	public static Cliente getCliente(int codigo){
 		String sql = "SELECT * FROM tbCliente";
 		Cliente cliente = new Cliente();
 		
@@ -127,7 +127,7 @@ public class ClienteDAO {
 				aux.setCLI_ENDERECO(rset.getString("CLI_ENDERECO"));
 				aux.setCLI_TELEFONE(rset.getString("CLI_TELEFONE"));
 				
-				if(aux.getCLI_CODIGO() == codigoCliente) {
+				if(aux.getCLI_CODIGO() == codigo) {
 					cliente = aux;
 				}
 			}

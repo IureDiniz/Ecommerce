@@ -1,6 +1,7 @@
 package br.com.eccomerce.dao;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,13 +9,12 @@ import java.util.List;
 import com.mysql.cj.jdbc.JdbcPreparedStatement;
 
 import br.com.eccomerce.factory.ConnectionFactory;
-import br.com.eccomerce.model.Cliente;
+import br.com.eccomerce.model.Pedido;
 
-public class ClienteDAO {
-	
-	public static void saveCliente(Cliente cliente) {
-		String sql = "INSERT INTO tbCliente(CLI_NOME, CLI_EMAIL, CLI_ENDERECO, CLI_TELEFONE) VALUES (?, ?, ?, ?)";
-	
+public class PedidoDAO {
+	public static void savePedido(Pedido pedido) {
+		String sql = "INSERT INTO tbPedido(CLI_CODIGO, PED_DATA) VALUES (?, ?)";
+		
 		Connection conn = null;
 		JdbcPreparedStatement pstm = null;
 		
@@ -25,10 +25,8 @@ public class ClienteDAO {
 			pstm = (JdbcPreparedStatement) conn.prepareStatement(sql);
 			
 			// Adiciona os valores esperados pela query
-			pstm.setString(1, cliente.getCLI_NOME());
-			pstm.setString(2, cliente.getCLI_EMAIL());
-			pstm.setString(3, cliente.getCLI_ENDERECO());
-			pstm.setString(4, cliente.getCLI_TELEFONE());
+			pstm.setInt(1, pedido.getCLI_CODIGO());
+			pstm.setDate(2, pedido.getPED_DATA_SQL());
 			
 			// Executa a query
 			pstm.execute();
@@ -53,10 +51,11 @@ public class ClienteDAO {
 			}
 		}
 	}
-
-	public static List<Cliente> getCliente(){
-		String sql = "SELECT * FROM tbCliente";
-		List<Cliente> clientes = new ArrayList<Cliente>();
+	
+	public static List<Pedido> listPedido(){
+		List<Pedido> pedidos = new ArrayList<Pedido>();
+		
+		String sql = "SELECT * FROM tbPedido";
 		
 		Connection conn = null;
 		JdbcPreparedStatement pstm = null;
@@ -70,16 +69,14 @@ public class ClienteDAO {
 			rset = pstm.executeQuery();
 			
 			while (rset.next()) {
-				Cliente cliente = new Cliente();
+				Pedido pedido = new Pedido();
 				
 				// Recuperar os atributos
-				cliente.setCLI_CODIGO(rset.getInt("CLI_CODIGO"));
-				cliente.setCLI_NOME(rset.getString("CLI_NOME"));
-				cliente.setCLI_EMAIL(rset.getString("CLI_EMAIL"));
-				cliente.setCLI_ENDERECO(rset.getString("CLI_ENDERECO"));
-				cliente.setCLI_TELEFONE(rset.getString("CLI_TELEFONE"));
+				pedido.setPED_CODIGO(rset.getInt("PED_CODIGO"));
+				pedido.setCLI_CODIGO(rset.getInt("CLI_CODIGO"));
+				pedido.setPED_DATA(rset.getDate("PED_DATA"));
 				
-				clientes.add(cliente);
+				pedidos.add(pedido);
 			}
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -99,12 +96,13 @@ public class ClienteDAO {
 			}
 		}
 		
-		return clientes;
+		return pedidos;
 	}
 
-	public static Cliente getCliente(int codigoCliente){
-		String sql = "SELECT * FROM tbCliente";
-		Cliente cliente = new Cliente();
+	public static Pedido listPedido(int codigo){
+		Pedido pedido = null;
+		
+		String sql = "SELECT * FROM tbPedido";
 		
 		Connection conn = null;
 		JdbcPreparedStatement pstm = null;
@@ -118,17 +116,15 @@ public class ClienteDAO {
 			rset = pstm.executeQuery();
 			
 			while (rset.next()) {
-				Cliente aux = new Cliente();
+				Pedido aux = new Pedido();
 				
 				// Recuperar os atributos
+				aux.setPED_CODIGO(rset.getInt("PED_CODIGO"));
 				aux.setCLI_CODIGO(rset.getInt("CLI_CODIGO"));
-				aux.setCLI_NOME(rset.getString("CLI_NOME"));
-				aux.setCLI_EMAIL(rset.getString("CLI_EMAIL"));
-				aux.setCLI_ENDERECO(rset.getString("CLI_ENDERECO"));
-				aux.setCLI_TELEFONE(rset.getString("CLI_TELEFONE"));
+				aux.setPED_DATA(rset.getDate("PED_DATA"));
 				
-				if(aux.getCLI_CODIGO() == codigoCliente) {
-					cliente = aux;
+				if(aux.getPED_CODIGO() == codigo) {
+					pedido = aux;
 				}
 			}
 		}catch (Exception e) {
@@ -149,51 +145,96 @@ public class ClienteDAO {
 			}
 		}
 		
-		return cliente;
+		return pedido;
+	}
+
+	public static Pedido getLastPedido(){
+		Pedido pedido = null;
+		
+		String sql = "SELECT * FROM tbPedido";
+		
+		Connection conn = null;
+		JdbcPreparedStatement pstm = null;
+		
+		// Classe que vai recuperar os dados do banco. ***SELECT***
+		ResultSet rset = null;
+		
+		try {
+			conn = ConnectionFactory.createConnectionToMySQL();
+			pstm = (JdbcPreparedStatement) conn.prepareStatement(sql);
+			rset = pstm.executeQuery();
+			
+			while (rset.next()) {
+				Pedido aux = new Pedido();
+				
+				// Recuperar os atributos
+				aux.setPED_CODIGO(rset.getInt("PED_CODIGO"));
+				aux.setCLI_CODIGO(rset.getInt("CLI_CODIGO"));
+				aux.setPED_DATA(rset.getDate("PED_DATA"));
+
+				pedido = aux;
+			}
+		}catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(rset != null) {
+					rset.close();
+				}
+				if(pstm != null) {
+					pstm.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return pedido;
 	}
 	
-	public static void updateCliente(Cliente cliente) {
-		String sql = "UPDATE tbCliente SET CLI_NOME = ?, CLI_EMAIL = ?, CLI_ENDERECO = ?, CLI_TELEFONE = ?" +
-					 "WHERE CLI_CODIGO = ?";
+	public static void updatePedido(Pedido pedido) {
+		String sql = "UPDATE tbPedido SET CLI_CODIGO = ?, PED_DATA = ?" +
+				 "WHERE PED_CODIGO = ?";
+	
+	Connection conn = null;
+	JdbcPreparedStatement pstm = null;
+	
+	try {
+		//Cria conexão
+		conn = ConnectionFactory.createConnectionToMySQL();
 		
-		Connection conn = null;
-		JdbcPreparedStatement pstm = null;
+		// Cria classe de execução da query
+		pstm = (JdbcPreparedStatement) conn.prepareStatement(sql);
 		
+		// Adiciona os valores para atualizar
+		pstm.setInt(1, pedido.getCLI_CODIGO());
+		pstm.setDate(2, (Date) pedido.getPED_DATA());
+		pstm.setInt(3, pedido.getPED_CODIGO());
+		
+		// Executa a query
+		pstm.execute();
+		
+	} catch(Exception e) {
+		e.printStackTrace();
+	} finally {
 		try {
-			//Cria conexão
-			conn = ConnectionFactory.createConnectionToMySQL();
-			
-			// Cria classe de execução da query
-			pstm = (JdbcPreparedStatement) conn.prepareStatement(sql);
-			
-			// Adiciona os valores para atualizar
-			pstm.setString(1, cliente.getCLI_NOME());
-			pstm.setString(2, cliente.getCLI_EMAIL());
-			pstm.setString(3, cliente.getCLI_ENDERECO());
-			pstm.setString(4, cliente.getCLI_TELEFONE());
-			pstm.setInt(5, cliente.getCLI_CODIGO());
-			
-			// Executa a query
-			pstm.execute();
-			
+			if(pstm != null) {
+				pstm.close();
+			}
+			if(conn != null) {
+				conn.close();
+			}
 		} catch(Exception e) {
 			e.printStackTrace();
-		} finally {
-			try {
-				if(pstm != null) {
-					pstm.close();
-				}
-				if(conn != null) {
-					conn.close();
-				}
-			} catch(Exception e) {
-				e.printStackTrace();
-			}
 		}
 	}
-
-	public static void deleteCliente(Cliente cliente) {
-		String sql = "DELETE FROM tbCliente WHERE CLI_CODIGO = ?";
+	}
+	
+	public static void deletePedido(Pedido pedido) {
+		String sql = "DELETE FROM tbPedido WHERE PED_CODIGO = ?";
 		
 		Connection conn = null; 
 		JdbcPreparedStatement pstm = null;
@@ -202,7 +243,7 @@ public class ClienteDAO {
 			conn = ConnectionFactory.createConnectionToMySQL();
 			pstm = (JdbcPreparedStatement) conn.prepareStatement(sql);
 			
-			pstm.setInt(1, cliente.getCLI_CODIGO());
+			pstm.setInt(1, pedido.getPED_CODIGO());
 			
 			pstm.execute();
 		} catch (Exception e) {
@@ -221,5 +262,5 @@ public class ClienteDAO {
 		}
 	}
 
-	
 }
+

@@ -1,7 +1,5 @@
 package br.com.eccomerce.model;
 
-import br.com.eccomerce.dao.ClienteDAO;
-
 public class Cliente {
 	private int CLI_CODGO;
 	private String CLI_NOME;
@@ -55,15 +53,5 @@ public class Cliente {
 				+ "\nEMAIL: " + this.getCLI_EMAIL()
 				+ "\nENDERECO: " + this.getCLI_ENDERECO()
 				+ "\nETELEFONE: " + this.getCLI_TELEFONE() + "\n";
-	}
-
-	public static boolean existeCliente(int codigoCliente) {
-		Cliente cliente = ClienteDAO.getCliente(codigoCliente);
-		if(cliente.getCLI_CODIGO() == 0) {
-			return false;
-		}
-		else {
-			return true;
-		}
 	}
 }

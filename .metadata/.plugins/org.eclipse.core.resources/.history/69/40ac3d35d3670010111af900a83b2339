@@ -1,6 +1,5 @@
 package br.com.eccomerce.gui;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -477,214 +476,91 @@ public class TerminalGUI {
 
 	// PEDIDO
 	private static void listarPedido(){
-		try {
-			List<Pedido> pedidos = PedidoDAO.listPedido();
-			
-			if(pedidos.isEmpty()) {
-				linhaSimples();
-				System.out.print("Nenhum pedido encontrado");
-				linhaSimples();
-			}
-			else {
-				for(Pedido pedido : pedidos) {
-					Venda venda = new Venda(pedido.getPED_CODIGO());
-					System.out.println(venda.toString());
-				}
-			}
-		}
-		catch(Exception e) {
-			linhaComposta();
-			System.out.print("OCORREU UM ERRO: " + e);
-			linhaComposta();
+		List<Pedido> pedidos = PedidoDAO.listPedido();
+		
+		for(Pedido pedido : pedidos) {
+			Venda venda = new Venda(pedido.getPED_CODIGO());
+			System.out.println(venda.toString());
 		}
 	}
 	
 	private static void adicionarPeidido() {
-		try {
-			int codigoCliente, codigoProduto;
-			int nItens;
-			int qtdeProduto;
+
+		int codigoCliente, codigoProduto;
+		int nItens;
+		int qtdeProduto;
+		
+		System.out.print("CODIGO DO CLIENTE: ");
+		codigoCliente = leitor.nextInt();
+		System.out.print("NUMERO DE ITENS: ");
+		nItens = leitor.nextInt();
+		
+		Date dataAtual = new Date();
+		Pedido pedido = new Pedido(codigoCliente, dataAtual);
+		PedidoDAO.savePedido(pedido);
+		
+		for(int i = 0; i < nItens; i++) {
+			System.out.print("CODIGO DO PRODUTO: ");
+			codigoProduto = leitor.nextInt();
+			System.out.print("QUANTIDADE: ");
+			qtdeProduto = leitor.nextInt();
 			
-			System.out.print("CODIGO DO CLIENTE: ");
-			codigoCliente = leitor.nextInt();
-			
-			if(Cliente.existeCliente(codigoCliente)) {
-				System.out.print("NUMERO DE ITENS: ");
-				nItens = leitor.nextInt();
-				
-				Date dataAtual = new Date();
-				Pedido pedido = new Pedido(codigoCliente, dataAtual);
-				PedidoDAO.savePedido(pedido);
-				
-				for(int i = 0; i < nItens; i++) {
-					System.out.print("CODIGO DO PRODUTO: ");
-					codigoProduto = leitor.nextInt();
-					
-					if(Produto.existeProduto(codigoProduto)) {
-						
-						List<Produto> produtos = new ArrayList<Produto>();
-						produtos.add(ProdutoDAO.getProduto(codigoProduto));
-						
-						
-						System.out.print("QUANTIDADE: ");
-						qtdeProduto = leitor.nextInt();
-						
-						if(Produto.emEstoque(codigoProduto, qtdeProduto)) {
-							Pedido ultimoPedido = PedidoDAO.getLastPedido();
-							ProdutoPedido produtoPedido = new ProdutoPedido(ultimoPedido.getPED_CODIGO(), codigoProduto, qtdeProduto);
-							ProdutoPedidoDAO.saveProdutoPedido(produtoPedido);
-							
-							produtos.get(i).setPRO_ESTOQUE(produtos.get(i).getPRO_ESTOQUE() - qtdeProduto);
-							for(Produto item : produtos) {
-								ProdutoDAO.updateProduto(item);
-							}
-						}
-						else {
-							linhaSimples();
-							System.out.print("Quantidade maior que o estoque");
-							linhaSimples();
-							i--;
-						}
-					}
-					else {
-						linhaSimples();
-						System.out.print("Produto não encontrado");
-						linhaSimples();
-						i--;
-					}
-				}
-				
-			}
-			else {
-				linhaSimples();
-				System.out.print("Cliente não localizado");
-				linhaSimples();
-			}
-		}
-		catch(InputMismatchException e) {
-			linhaComposta();
-			System.out.print("VALOR DIGITADO INVALIDO");
-			linhaComposta();
-			leitor.nextLine(); // Limpa o buffer
-		}
-		catch(Exception e) {
-			linhaComposta();
-			System.out.print("OCORREU UM ERRO: " + e);
-			linhaComposta();
-			leitor.nextLine(); // Limpa o buffer
+			Pedido ultimoPedido = PedidoDAO.getLastPedido();
+			ProdutoPedido produtoPedido = new ProdutoPedido(ultimoPedido.getPED_CODIGO(), codigoProduto, qtdeProduto);
+			ProdutoPedidoDAO.saveProdutoPedido(produtoPedido);
 		}
 	}
 	
 	private static void excluirPeidido() {
-		try {
-			System.out.print("Digite o código do pedido: ");
-			int codigo = leitor.nextInt();
-			Pedido pedido = PedidoDAO.listPedido(codigo);
-			
-			if(pedido.getPED_CODIGO() == 0) {
-				linhaSimples();
-				System.out.println("Pedido não encontrado");
-				linhaSimples();
-			}
-			else {
-				List<ProdutoPedido> produtosPedidos = ProdutoPedidoDAO.listProdutoPedido(codigo);
-				for(ProdutoPedido item : produtosPedidos) {
-					ProdutoPedidoDAO.deleteProdutoPedido(item);
-				}
-				
-				PedidoDAO.deletePedido(pedido);
-			}
+
+		System.out.print("Digite o código do pedido: ");
+		int codigo = leitor.nextInt();
+		Pedido pedido = PedidoDAO.listPedido(codigo);
+		
+		
+		List<ProdutoPedido> produtosPedidos = ProdutoPedidoDAO.listProdutoPedido(codigo);
+		for(ProdutoPedido item : produtosPedidos) {
+			ProdutoPedidoDAO.deleteProdutoPedido(item);
 		}
-		catch(InputMismatchException e) {
-			linhaComposta();
-			System.out.print("VALOR DIGITADO INVALIDO");
-			linhaComposta();
-			leitor.nextLine(); // Limpa o buffer
-		}
-		catch(Exception e) {
-			linhaComposta();
-			System.out.print("OCORREU UM ERRO: " + e);
-			linhaComposta();
-			leitor.nextLine(); // Limpa o buffer
-		}
+		
+		PedidoDAO.deletePedido(pedido);
 	}
 	
 	private static void modificarPedido() {
-		try {
-			System.out.print("Digite o código do pedido: ");
-			int codigo = leitor.nextInt();
-			
-			Pedido pedido = PedidoDAO.listPedido(codigo);
-			List<ProdutoPedido> produtosPedidosAntigos = ProdutoPedidoDAO.listProdutoPedido(codigo);
-			
-			if(pedido.getPED_CODIGO() == 0) {
-				linhaSimples();
-				System.out.print("Pedido não encontrado");
-				linhaSimples();
-			}
-			else {
-				int codigoCliente, codigoProduto;
-				int nItens;
-				int qtdeProduto;
-				
-				System.out.print("CODIGO DO CLIENTE: ");
-				codigoCliente = leitor.nextInt();
 
-				Cliente testaCliente = ClienteDAO.getCliente(codigoCliente);
-				
-				if(testaCliente.getCLI_CODIGO() == 0) {
-					linhaSimples();
-					System.out.print("Cliente não encontrado");
-					linhaSimples();
-					return;
-				} 
-				else {
-					System.out.print("NUMERO DE ITENS: ");
-					nItens = leitor.nextInt();
-					
-					pedido.setCLI_CODIGO(codigoCliente);
-					PedidoDAO.updatePedido(pedido);
-					
-					for(int i = 0; i < nItens; i++) {
-						System.out.print("CODIGO DO PRODUTO: ");
-						codigoProduto = leitor.nextInt();
-						
-						Produto testaProduto = ProdutoDAO.getProduto(codigoProduto);
+		System.out.print("Digite o código do pedido: ");
+		int codigo = leitor.nextInt();
+		
+		Pedido pedido = PedidoDAO.listPedido(codigo);
+		List<ProdutoPedido> produtosPedidosAntigos = ProdutoPedidoDAO.listProdutoPedido(codigo);
+		
+		int codigoCliente, codigoProduto;
+		int nItens;
+		int qtdeProduto;
+		
+		System.out.print("CODIGO DO CLIENTE: ");
+		codigoCliente = leitor.nextInt();
+		System.out.print("NUMERO DE ITENS: ");
+		nItens = leitor.nextInt();
+		
+		pedido.setCLI_CODIGO(codigoCliente);
+		PedidoDAO.updatePedido(pedido);
+		
+		for(int i = 0; i < nItens; i++) {
+			System.out.print("CODIGO DO PRODUTO: ");
+			codigoProduto = leitor.nextInt();
+			System.out.print("QUANTIDADE: ");
+			qtdeProduto = leitor.nextInt();
 			
-						if(testaProduto.getPRO_CODIGO() == 0) {
-							linhaSimples();
-							System.out.print("Produto não localizado");
-							linhaSimples();
-							i--;
-						}
-						else {
-							System.out.print("QUANTIDADE: ");
-							qtdeProduto = leitor.nextInt();
-							
-							ProdutoPedido produtoPedido = new ProdutoPedido(pedido.getPED_CODIGO(), codigoProduto, qtdeProduto);
-							ProdutoPedidoDAO.saveProdutoPedido(produtoPedido);
-						}
-						
-						
-						for(ProdutoPedido item : produtosPedidosAntigos) {
-							ProdutoPedidoDAO.deleteProdutoPedido(item);
-						}
-					}
-				}
-			}
+			ProdutoPedido produtoPedido = new ProdutoPedido(pedido.getPED_CODIGO(), codigoProduto, qtdeProduto);
+			ProdutoPedidoDAO.saveProdutoPedido(produtoPedido);
 		}
-		catch(InputMismatchException e) {
-			linhaComposta();
-			System.out.print("VALOR DIGITADO INVALIDO");
-			linhaComposta();
-			leitor.nextLine(); // Limpa o buffer
+		
+		
+		for(ProdutoPedido item : produtosPedidosAntigos) {
+			ProdutoPedidoDAO.deleteProdutoPedido(item);
 		}
-		catch(Exception e) {
-			linhaComposta();
-			System.out.print("OCORREU UM ERRO: " + e);
-			linhaComposta();
-			leitor.nextLine(); // Limpa o buffer
-		}
+		
 	}
 	
 	// CLIENTE

@@ -99,7 +99,7 @@ public class PedidoDAO {
 		return pedidos;
 	}
 
-	public static Pedido listPedido(int codigo){
+	public static Pedido listPedido(int codigoPedido){
 		Pedido pedido = null;
 		
 		String sql = "SELECT * FROM tbPedido";
@@ -123,7 +123,7 @@ public class PedidoDAO {
 				aux.setCLI_CODIGO(rset.getInt("CLI_CODIGO"));
 				aux.setPED_DATA(rset.getDate("PED_DATA"));
 				
-				if(aux.getPED_CODIGO() == codigo) {
+				if(aux.getPED_CODIGO() == codigoPedido) {
 					pedido = aux;
 				}
 			}
