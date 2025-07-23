@@ -1,7 +1,7 @@
 package br.com.eccomerce.gui;
 
-import java.time.LocalDate;
 import java.util.Date;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -16,287 +16,461 @@ import br.com.eccomerce.model.ProdutoPedido;
 import br.com.eccomerce.model.Venda;
 
 public class TerminalGUI {
+	static Scanner leitor = new Scanner(System.in);
+	
 	public static void menu() {
-		
-		Scanner leitor = new Scanner(System.in);
-		
 		boolean continuar = true;
 		while(continuar) {
-			int escolha;
-			System.out.print("\n--- MENU --- \n" 
-								+ "1. PRODUTOS\n"
-								+ "2. PEDIDOS\n"
-								+ "3. CLIENTES\n"
-								+ "4. SAIR\n"
-								+ "Sua escolha: ");
-			escolha = leitor.nextInt();
-			System.out.println();
-			
-			switch(escolha) {
-			case 1:
-				menuProduto();
-				break;
-			case 2:
-				menuPedido();
-				break;
-			case 3: 
-				menuCliente();
-				break;
-			case 4:
-				System.out.println("Saindo...");
-				continuar = false;
-				break;
-			default:
-				System.out.println("Escolha invalida");
-				break;
+			try {
+				int escolha;
+				linhaCompostaDupla();
+				System.out.print("\n--- MENU --- \n" 
+									+ "1. Produtos\n"
+									+ "2. Pedidos\n"
+									+ "3. Clientes\n"
+									+ "4. Sair\n"
+									+ "Sua escolha: ");
+				escolha = leitor.nextInt();
+				leitor.nextLine();
+				linhaCompostaDupla();
+				
+				switch(escolha) {
+				case 1:
+					menuProduto();
+					break;
+				case 2:
+					menuPedido();
+					break;
+				case 3: 
+					menuCliente();
+					break;
+				case 4:
+					System.out.println("Saindo...");
+					continuar = false;
+					break;
+				default:
+					System.out.println("Escolha invalida");
+					break;
+				}
 			}
+			catch(Exception e) {
+				linhaComposta();
+				System.out.print("VALOR DIGITADO INVALIDO");
+				linhaComposta();
+				if(!leitor.hasNextLine());{
+					leitor.nextLine();
+				}
+				
+			}
+			
+			
 		}
+		leitor.close();
 	}
 	
 	private static void menuProduto() {
-		Scanner leitor = new Scanner(System.in);
 		
 		boolean continuar = true;
 		while(continuar) {
-			int escolha;
-			System.out.print("\n--- MENU PRODUTO --- \n" 
-								+ "1. LISTAR PRODUTOS\n"
-								+ "2. ADICIONAR PRODUTO\n"
-								+ "3. EXCLUIR PRODUTO\n"
-								+ "4. MODIFICAR PRODUTO\n"
-								+ "5. PROCURAR PRODUTO PELO NOME\n"
-								+ "6. PROCURAR PRODUTO PELO PREÇO\n"
-								+ "7. VOLTAR\n"
-								+ "Sua escolha: ");
-			escolha = leitor.nextInt();
-			System.out.println();
-			
-			switch(escolha) {
-			case 1:
-				listarProduto();
-				break;
-			case 2:
-				adicionarProduto();
-				break;
-			case 3: 
-				excluirProduto();
-				break;
-			case 4:
-				modificarProduto();
-				break;
-			case 5:
-				procurarNomeProduto();
-				break;
-			case 6:
-				procurarPrecoProduto();
-				break;
-			case 7:
-				System.out.println("Voltando...");
-				continuar = false;
-				break;
-			default:
-				System.out.println("Escolha invalida");
-				break;
+			try {
+				int escolha;
+				linhaComposta();
+				System.out.print("\n--- MENU PRODUTO --- \n" 
+									+ "1. Listar Produtos\n"
+									+ "2. Adicionar Produtos\n"
+									+ "3. Excluir Produtos\n"
+									+ "4. Modificar Produtos\n"
+									+ "5. Procurar pelo Nome\n"
+									+ "6. Procurar pelo Preço\n"
+									+ "7. Voltar\n"
+									+ "Sua escolha: ");
+				escolha = leitor.nextInt();
+				
+				switch(escolha) {
+				case 1:
+					linhaComposta();
+					listarProduto();
+					break;
+				case 2:
+					linhaComposta();
+					adicionarProduto();
+					break;
+				case 3: 
+					linhaComposta();
+					excluirProduto();
+					break;
+				case 4:
+					linhaComposta();
+					modificarProduto();
+					break;
+				case 5:
+					linhaComposta();
+					procurarNomeProduto();
+					break;
+				case 6:
+					linhaComposta();
+					procurarPrecoProduto();
+					break;
+				case 7:
+					System.out.println("\nVoltando...");
+					linhaComposta();
+					continuar = false;
+					break;
+				default:
+					System.out.println("\nEscolha invalida");
+					linhaComposta();
+					break;
+				}
+			}
+			catch(InputMismatchException e) {
+				linhaComposta();
+				System.out.print("VALOR DIGITADO INVALIDO");
+				linhaComposta();
+				leitor.nextLine(); // Limpa o buffer
+			}
+			catch(Exception e) {
+				linhaComposta();
+				System.out.print("OCORREU UM ERRO " + e);
+				linhaComposta();
+				leitor.nextLine(); // Limpa o buffer
 			}
 		}
 	}
 	
 	private static void menuPedido() {
-		Scanner leitor = new Scanner(System.in);
-		
 		boolean continuar = true;
 		while(continuar) {
-			int escolha;
-			System.out.print("\n--- MENU PEDIDO --- \n" 
-								+ "1. LISTAR PEDIDOS\n"
-								+ "2. ADICIONAR PEDIDO\n"
-								+ "3. EXCLUIR PEDIDO\n"
-								+ "4. MODIFICAR PEDIDO\n"
-								+ "5. VOLTAR\n"
-								+ "Sua escolha: ");
-			escolha = leitor.nextInt();
-			System.out.println();
-			
-			switch(escolha) {
-			case 1:
-				listarPedido();
-				break;
-			case 2:
-				adicionarPeidido();
-				break;
-			case 3: 
-				excluirPeidido();
-				break;
-			case 4:
-				modificarPedido();
-				break;
-			case 5:
-				System.out.println("Voltando...");
-				continuar = false;
-				break;
-			default:
-				System.out.println("Escolha invalida");
-				break;
+			try {
+				int escolha;
+				System.out.print("\n--- MENU PEDIDO --- \n" 
+									+ "1. Listar Pedidos\n"
+									+ "2. Adicionar Pedidos\n"
+									+ "3. Excluir Pedidos\n"
+									+ "4. Modificar Pedidos\n"
+									+ "5. Voltar\n"
+									+ "Sua escolha: ");
+				escolha = leitor.nextInt();
+				System.out.println();
+				
+				switch(escolha) {
+				case 1:
+					listarPedido();
+					break;
+				case 2:
+					adicionarPeidido();
+					break;
+				case 3: 
+					excluirPeidido();
+					break;
+				case 4:
+					modificarPedido();
+					break;
+				case 5:
+					System.out.println("Voltando...");
+					continuar = false;
+					break;
+				default:
+					System.out.println("Escolha invalida");
+					break;
+				}
+			}
+			catch(InputMismatchException e) {
+				linhaComposta();
+				System.out.print("VALOR DIGITADO INVALIDO");
+				linhaComposta();
+				leitor.nextLine(); // Limpa o buffer
+			}
+			catch(Exception e) {
+				linhaComposta();
+				System.out.print("OCORREU UM ERRO " + e);
+				linhaComposta();
+				leitor.nextLine(); // Limpa o buffer
 			}
 		}
+
 	}
 
 	private static void menuCliente() {
-		Scanner leitor = new Scanner(System.in);
 		
 		boolean continuar = true;
 		while(continuar) {
-			int escolha;
-			System.out.print("\n--- MENU CLIENTE --- \n" 
-								+ "1. LISTAR CLIENTE\n"
-								+ "2. ADICIONAR CLIENTE\n"
-								+ "3. EXCLUIR CLIENTE\n"
-								+ "4. MODIFICAR CLIENTE\n"
-								+ "5. VOLTAR\n"
-								+ "Sua escolha: ");
-			escolha = leitor.nextInt();
-			System.out.println();
-			
-			switch(escolha) {
-			case 1:
-				listarCliente();
-				break;
-			case 2:
-				adicionarCliente();
-				break;
-			case 3: 
-				excluirCliente();
-				break;
-			case 4:
-				modificarCliente();
-				break;
-			case 5:
-				System.out.println("Voltando...");
-				continuar = false;
-				break;
-			default:
-				System.out.println("Escolha invalida");
-				break;
+			try {
+				int escolha;
+				System.out.print("\n--- MENU CLIENTE --- \n" 
+									+ "1. Listar Cliente\n"
+									+ "2. Adicionar Cliente\n"
+									+ "3. Excluir Cliente\n"
+									+ "4. Modificar Cliente\n"
+									+ "5. Voltar\n"
+									+ "Sua escolha: ");
+				escolha = leitor.nextInt();
+				System.out.println();
+				
+				switch(escolha) {
+				case 1:
+					listarCliente();
+					break;
+				case 2:
+					adicionarCliente();
+					break;
+				case 3: 
+					excluirCliente();
+					break;
+				case 4:
+					modificarCliente();
+					break;
+				case 5:
+					System.out.println("Voltando...");
+					continuar = false;
+					break;
+				default:
+					System.out.println("Escolha invalida");
+					break;
+				}
+			}
+			catch(InputMismatchException e) {
+				linhaComposta();
+				System.out.print("VALOR DIGITADO INVALIDO");
+				linhaComposta();
+				leitor.nextLine(); // Limpa o buffer
+			}
+			catch(Exception e) {
+				linhaComposta();
+				System.out.print("OCORREU UM ERRO " + e);
+				linhaComposta();
+				leitor.nextLine(); // Limpa o buffer
 			}
 		}
+
 	}
 	
 	
 	// PRODUTO
 	private static void listarProduto() {
-		List<Produto> produtos = ProdutoDAO.listProduto();
-		
-		for(Produto produto : produtos) {
-			System.out.println(produto.toString());
+		try {
+			List<Produto> produtos = ProdutoDAO.listProduto();
+			
+			if(produtos.isEmpty())
+			{
+				System.out.println("\nNenhum produto foi encontrado");
+			}
+			else
+			{
+				for(Produto produto : produtos) {
+					System.out.println(produto.toString());
+				}
+			}
+		}
+		catch(Exception e) {
+			linhaComposta();
+			System.out.print("OCORREU UM ERRO " + e);
+			linhaComposta();
 		}
 	}
 
 	private static void adicionarProduto() {
-		Scanner leitor = new Scanner(System.in);
-		
-		System.out.print("Nome: ");
-		String nome = leitor.nextLine();
-		
-		System.out.print("Descrição: ");
-		String descricao = leitor.nextLine();
-		
-		System.out.print("Valor: R$");
-		double valor = leitor.nextDouble();
-		
-		System.out.print("Quantidade: ");
-		int quantidade = leitor.nextInt();
-		
-		Produto produto = new Produto(nome, descricao, valor, quantidade);
-		
-		ProdutoDAO.saveProduto(produto);
+		try {
+
+			System.out.print("Nome: ");
+			String nome = leitor.nextLine();
+			
+			System.out.print("Descrição: ");
+			String descricao = leitor.nextLine();
+			
+			System.out.print("Valor: R$");
+			double valor = leitor.nextDouble();
+			
+			System.out.print("Quantidade: ");
+			int quantidade = leitor.nextInt();
+
+			Produto produto = new Produto(nome, descricao, valor, quantidade);
+			try {
+				ProdutoDAO.saveProduto(produto);
+			}
+			catch(Exception e) {
+				linhaComposta();
+				System.out.print("ERRO AO CADASTRAR PRODUTO: " + e.toString());
+				linhaComposta();
+			}
+			leitor.close();
+		}
+		catch(InputMismatchException e) {
+			linhaComposta();
+			System.out.print("VALOR DIGITADO INVALIDO");
+			linhaComposta();
+			leitor.nextLine(); // Limpa o buffer
+		}
+		catch(Exception e) {
+			linhaComposta();
+			System.out.print("OCORREU UM ERRO " + e);
+			linhaComposta();
+			leitor.nextLine(); // Limpa o buffer
+		}
 	}
 
 	private static void excluirProduto() {
-		Scanner leitor = new Scanner(System.in);
-		
-		System.out.print("CODIGO DO PRODUTO: ");
-		int codigo = leitor.nextInt();
-		
-		Produto produto = ProdutoDAO.getProduto(codigo);
-		
-		System.out.println(produto.toString());
-		System.out.print("Deseja excluir(S/N)?  ");
-		String resposta = leitor.next();
-		
-		if(resposta.toCharArray()[0] == 'S' || resposta.toCharArray()[0] == 's') {
-			ProdutoDAO.deleteProduto(produto);
+
+		try {
+			System.out.print("CODIGO DO PRODUTO: ");
+			int codigo = leitor.nextInt();
+			
+			Produto produto = ProdutoDAO.getProduto(codigo);
+			
+			if(produto.getPRO_CODIGO() == 0) {
+				linhaComposta();
+				System.out.print("Produto não encontrado");
+				linhaComposta();
+			}
+			else {
+				System.out.println(produto.toString());
+				System.out.print("Deseja excluir(S/N)?  ");
+				String resposta = leitor.next();
+				
+				if(resposta.toCharArray()[0] == 'S' || resposta.toCharArray()[0] == 's') {
+					ProdutoDAO.deleteProduto(produto);
+				}
+				else {
+					System.out.println("Nenhum produto foi excluido");
+				}
+			}		
 		}
-		else {
-			System.out.println("Nenhum produto foi excluido");
+		catch(InputMismatchException e) {
+			linhaComposta();
+			System.out.print("VALOR DIGITADO INVALIDO");
+			linhaComposta();
+			leitor.nextLine(); // Limpa o buffer
+		}
+		catch(Exception e) {
+			linhaComposta();
+			System.out.print("OCORREU UM ERRO " + e);
+			linhaComposta();
+			leitor.nextLine(); // Limpa o buffer
 		}
 	}
 
 	private static void modificarProduto() {
-		Scanner leitor = new Scanner(System.in);
-		
-		System.out.print("CODIGO DO PRODUTO: ");
-		int codigo = leitor.nextInt();
-		
-		Produto produto = ProdutoDAO.getProduto(codigo);
-		
-		System.out.println(produto.toString());
-		System.out.print("Deseja modificar(S/N)?  ");
-		String resposta = leitor.next();
-		
-		if(resposta.toCharArray()[0] == 'S' || resposta.toCharArray()[0] == 's') {
+		try {
+			System.out.print("CODIGO DO PRODUTO: ");
+			int codigo = leitor.nextInt();
 			
-			System.out.print("NOVO NOME: ");
-			leitor.nextLine();
-			String nome = leitor.nextLine();
+			Produto produto = ProdutoDAO.getProduto(codigo);
 			
-			System.out.print("NOVA DESCRIÇÃO: ");
-			String descricao = leitor.nextLine();
-			
-			System.out.print("NOVO VALOR: R$");
-			double valor = leitor.nextDouble();
-			
-			System.out.print("NOVO ESTOQUE: ");
-			int estoque = leitor.nextInt();
-			
-			produto.setPRO_NOME(nome);
-			produto.setPRO_DESCRICAO(descricao);
-			produto.setPRO_VALOR(valor);
-			produto.setPRO_ESTOQUE(estoque);
-			
-			ProdutoDAO.updateProduto(produto);
+			if(produto.getPRO_CODIGO() == 0) {
+				linhaComposta();
+				System.out.print("Produto não encontrado");
+				linhaComposta();
+			}
+			else {
+				System.out.println(produto.toString());
+				System.out.print("Deseja modificar(S/N)?  ");
+				String resposta = leitor.next();
+				
+				if(resposta.toCharArray()[0] == 'S' || resposta.toCharArray()[0] == 's') {
+					
+					System.out.print("NOVO NOME: ");
+					leitor.nextLine();
+					String nome = leitor.nextLine();
+					
+					System.out.print("NOVA DESCRIÇÃO: ");
+					String descricao = leitor.nextLine();
+					
+					System.out.print("NOVO VALOR: R$");
+					double valor = leitor.nextDouble();
+					
+					System.out.print("NOVO ESTOQUE: ");
+					int estoque = leitor.nextInt();
+					
+					produto.setPRO_NOME(nome);
+					produto.setPRO_DESCRICAO(descricao);
+					produto.setPRO_VALOR(valor);
+					produto.setPRO_ESTOQUE(estoque);
+					
+					ProdutoDAO.updateProduto(produto);
+				}
+				else {
+					System.out.println("Nenhum produto foi modificado");
+					return;
+				}
+			}
 		}
-		else {
-			System.out.println("Nenhum produto foi modificado");
-			return;
+		catch(InputMismatchException e) {
+			linhaComposta();
+			System.out.print("VALOR DIGITADO INVALIDO");
+			linhaComposta();
+			leitor.nextLine(); // Limpa o buffer
+		}
+		catch(Exception e) {
+			linhaComposta();
+			System.out.print("OCORREU UM ERRO " + e);
+			linhaComposta();
+			leitor.nextLine(); // Limpa o buffer
 		}
 	}
 
 	private static void procurarNomeProduto() {
-		Scanner leitor = new Scanner(System.in);
-		
-		System.out.print("Nome: ");
-		String nome = leitor.nextLine();
-		
-		List<Produto> produtos = ProdutoDAO.listProduto(nome);
-		
-		for(Produto produto : produtos) {
-			System.out.println(produto.toString());
+		try {
+			System.out.print("Nome: ");
+			if(leitor.hasNextLine()){
+				leitor.nextLine();
+			}
+			String nome = leitor.nextLine();
+			
+			List<Produto> produtos = ProdutoDAO.listProduto(nome);
+			if(produtos.isEmpty()) {
+				linhaComposta();
+				System.out.print("Nenhum produto encontrado");
+				linhaComposta();
+			}
+			else {
+				for(Produto produto : produtos) {
+					System.out.println(produto.toString());
+				}
+			}
+		}
+		catch(InputMismatchException e) {
+			linhaComposta();
+			System.out.print("VALOR DIGITADO INVALIDO");
+			linhaComposta();
+		}
+		catch(Exception e) {
+			linhaComposta();
+			System.out.print("OCORREU UM ERRO " + e);
+			linhaComposta();
 		}
 	}
 	
 	private static void procurarPrecoProduto() {
-		Scanner leitor = new Scanner(System.in);
-		
-		System.out.print("Preco minimo: ");
-		double precoMinimo = leitor.nextDouble();
-		
-		System.out.print("Preco máximo: ");
-		double precoMaximo = leitor.nextDouble();
-		
-		List<Produto> produtos = ProdutoDAO.listProduto(precoMinimo, precoMaximo);
-		
-		for(Produto produto : produtos) {
-			System.out.println(produto.toString());
+		try {
+			System.out.print("Preco minimo: ");
+			double precoMinimo = leitor.nextDouble();
+			
+			System.out.print("Preco máximo: ");
+			double precoMaximo = leitor.nextDouble();
+			
+			List<Produto> produtos = ProdutoDAO.listProduto(precoMinimo, precoMaximo);
+			
+			if(produtos.isEmpty()) {
+				linhaComposta();
+				System.out.print("Nenhum produto encontrado");
+				linhaComposta();
+			}
+			else {
+				for(Produto produto : produtos) {
+					System.out.println(produto.toString());
+				}
+			}
+		}
+		catch(InputMismatchException e) {
+			linhaComposta();
+			System.out.print("VALOR DIGITADO INVALIDO");
+			linhaComposta();
+			leitor.nextLine(); // Limpa o buffer
+		}
+		catch(Exception e) {
+			linhaComposta();
+			System.out.print("OCORREU UM ERRO: " + e);
+			linhaComposta();
+			leitor.nextLine(); // Limpa o buffer
 		}
 	}
 
@@ -311,8 +485,7 @@ public class TerminalGUI {
 	}
 	
 	private static void adicionarPeidido() {
-		Scanner leitor = new Scanner(System.in);
-		
+
 		int codigoCliente, codigoProduto;
 		int nItens;
 		int qtdeProduto;
@@ -339,8 +512,7 @@ public class TerminalGUI {
 	}
 	
 	private static void excluirPeidido() {
-		Scanner leitor = new Scanner(System.in);
-		
+
 		System.out.print("Digite o código do pedido: ");
 		int codigo = leitor.nextInt();
 		Pedido pedido = PedidoDAO.listPedido(codigo);
@@ -355,8 +527,7 @@ public class TerminalGUI {
 	}
 	
 	private static void modificarPedido() {
-		Scanner leitor = new Scanner(System.in);
-		
+
 		System.out.print("Digite o código do pedido: ");
 		int codigo = leitor.nextInt();
 		
@@ -394,94 +565,175 @@ public class TerminalGUI {
 	
 	// CLIENTE
 	private static void listarCliente() {
-		List<Cliente> clientes = ClienteDAO.getCliente();
-		
-		for(Cliente cliente : clientes) {
-			System.out.println(cliente.toString());
+		try {
+			List<Cliente> clientes = ClienteDAO.getCliente();
+			
+			if(clientes.isEmpty())
+			{
+				linhaSimples();
+				System.out.println("\nNenhum cliente foi encontrado");
+				linhaSimples();
+			}
+			else
+			{
+				for(Cliente cliente : clientes) {
+					System.out.println(cliente.toString());
+				}
+			}
 		}
-		
+		catch(Exception e) {
+			linhaComposta();
+			System.out.print("OCORREU UM ERRO: " + e);
+			linhaComposta();
+		}
 	}
 
 	private static void adicionarCliente() {
-		Scanner leitor = new Scanner(System.in);
-		
-		System.out.print("Nome: ");
-		String nome = leitor.nextLine();
-		
-		System.out.print("Email: ");
-		String email = leitor.nextLine();
-		
-		System.out.print("Endereco: ");
-		String endereco = leitor.nextLine();
-		
-		System.out.print("Telefone: ");
-		String telefone= leitor.nextLine();
-		
-		Cliente cliente = new Cliente(nome, email, endereco, telefone);
-		
-		ClienteDAO.saveCliente(cliente);
-		
+		try {
+			System.out.print("Nome: ");
+			String nome = leitor.nextLine();
+			
+			System.out.print("Email: ");
+			String email = leitor.nextLine();
+			
+			System.out.print("Endereco: ");
+			String endereco = leitor.nextLine();
+			
+			System.out.print("Telefone: ");
+			String telefone= leitor.nextLine();
+			
+			Cliente cliente = new Cliente(nome, email, endereco, telefone);
+			
+			ClienteDAO.saveCliente(cliente);
+		}
+		catch(InputMismatchException e) {
+			linhaComposta();
+			System.out.print("VALOR DIGITADO INVALIDO");
+			linhaComposta();
+			leitor.nextLine(); // Limpa o buffer
+		}
+		catch(Exception e) {
+			linhaComposta();
+			System.out.print("OCORREU UM ERRO " + e);
+			linhaComposta();
+			leitor.nextLine(); // Limpa o buffer
+		}
 	}
 
 	private static void excluirCliente() {
-		Scanner leitor = new Scanner(System.in);
-		
-		System.out.print("CODIGO DO CLIENTE: ");
-		int codigo = leitor.nextInt();
-		
-		Cliente cliente = ClienteDAO.getCliente(codigo);
-		
-		System.out.println(cliente.toString());
-		System.out.print("Deseja excluir(S/N)?  ");
-		String resposta = leitor.next();
-		
-		if(resposta.toCharArray()[0] == 'S' || resposta.toCharArray()[0] == 's') {
-			ClienteDAO.deleteCliente(cliente);
+		try {
+			System.out.print("CODIGO DO CLIENTE: ");
+			int codigo = leitor.nextInt();
+			
+			Cliente cliente = ClienteDAO.getCliente(codigo);
+			
+			if(cliente.getCLI_CODIGO() == 0) {
+				linhaSimples();
+				System.out.print("Cliente não encontrado");
+				linhaSimples();
+			}
+			else {
+				System.out.println(cliente.toString());
+				System.out.print("Deseja excluir(S/N)?  ");
+				String resposta = leitor.next();
+				
+				if(resposta.toCharArray()[0] == 'S' || resposta.toCharArray()[0] == 's') {
+					ClienteDAO.deleteCliente(cliente);
+				}
+				else {
+					System.out.println("Nenhum Cliente foi excluido");
+				}
+			}
 		}
-		else {
-			System.out.println("Nenhum Cliente foi excluido");
+		catch(InputMismatchException e) {
+			linhaComposta();
+			System.out.print("VALOR DIGITADO INVALIDO");
+			linhaComposta();
+			leitor.nextLine(); // Limpa o buffer
 		}
-		
+		catch(Exception e) {
+			linhaComposta();
+			System.out.print("OCORREU UM ERRO " + e);
+			linhaComposta();
+			leitor.nextLine(); // Limpa o buffer
+		}
 	}
 
 	private static void modificarCliente() {
-		Scanner leitor = new Scanner(System.in);
-		
-		System.out.print("CODIGO DO CLIENTE: ");
-		int codigo = leitor.nextInt();
-		
-		Cliente cliente= ClienteDAO.getCliente(codigo);
-		
-		System.out.println(cliente.toString());
-		System.out.print("Deseja modificar(S/N)?  ");
-		String resposta = leitor.next();
-		
-		if(resposta.toCharArray()[0] == 'S' || resposta.toCharArray()[0] == 's') {
+		try {
+			System.out.print("CODIGO DO CLIENTE: ");
+			int codigo = leitor.nextInt();
 			
-			System.out.print("NOVO NOME: ");
-			leitor.nextLine();
-			String nome = leitor.nextLine();
+			Cliente cliente= ClienteDAO.getCliente(codigo);
 			
-			System.out.print("NOVA EMAIL: ");
-			String email = leitor.nextLine();
-			
-			System.out.print("NOVO ENDERECO: ");
-			String endereco = leitor.nextLine();
-			
-			System.out.print("NOVO TELEFONE: ");
-			String telefone = leitor.nextLine();
-			
-			cliente.setCLI_NOME(nome);
-			cliente.setCLI_EMAIL(email);
-			cliente.setCLI_ENDERECO(endereco);
-			cliente.setCLI_TELEFONE(telefone);
-			
-			ClienteDAO.updateCliente(cliente);
+			if(cliente.getCLI_CODIGO() == 0) {
+				linhaSimples();
+				System.out.print("Cliente não encontrado");
+				linhaSimples();
+			}
+			else {
+				System.out.println(cliente.toString());
+				System.out.print("Deseja modificar(S/N)?  ");
+				String resposta = leitor.next();
+				
+				if(resposta.toCharArray()[0] == 'S' || resposta.toCharArray()[0] == 's') {
+					
+					System.out.print("NOVO NOME: ");
+					leitor.nextLine();
+					String nome = leitor.nextLine();
+					
+					System.out.print("NOVA EMAIL: ");
+					String email = leitor.nextLine();
+					
+					System.out.print("NOVO ENDERECO: ");
+					String endereco = leitor.nextLine();
+					
+					System.out.print("NOVO TELEFONE: ");
+					String telefone = leitor.nextLine();
+					
+					cliente.setCLI_NOME(nome);
+					cliente.setCLI_EMAIL(email);
+					cliente.setCLI_ENDERECO(endereco);
+					cliente.setCLI_TELEFONE(telefone);
+					
+					ClienteDAO.updateCliente(cliente);
+				}
+				else {
+					System.out.println("Nenhum cliente foi modificado");
+					return;
+				}
+			}
 		}
-		else {
-			System.out.println("Nenhum cliente foi modificado");
-			return;
+		catch(InputMismatchException e) {
+			linhaComposta();
+			System.out.print("VALOR DIGITADO INVALIDO");
+			linhaComposta();
+			leitor.nextLine(); // Limpa o buffer
 		}
-		
+		catch(Exception e) {
+			linhaComposta();
+			System.out.print("OCORREU UM ERRO " + e);
+			linhaComposta();
+			leitor.nextLine(); // Limpa o buffer
+		}
+	}
+
+	// LINHAS
+	private static void linhaSimples() {
+		System.out.print("\n--------------------\n");
+	}
+	
+	private static void linhaComposta() {
+		System.out.print("\n====================\n");
+	}
+	
+	private static void linhaSimplesDupla() {
+		System.out.print("\n--------------------\n");
+		System.out.print("--------------------\n");
+	}
+	
+	private static void linhaCompostaDupla() {
+		System.out.print("\n====================\n");
+		System.out.print("====================\n");
 	}
 }
