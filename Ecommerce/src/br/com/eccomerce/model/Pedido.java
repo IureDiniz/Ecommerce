@@ -1,6 +1,5 @@
 package br.com.eccomerce.model;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 public class Pedido {

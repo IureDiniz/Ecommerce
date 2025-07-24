@@ -1,5 +1,8 @@
 package br.com.eccomerce.model;
 
+import br.com.eccomerce.dao.ClienteDAO;
+import br.com.eccomerce.dao.ProdutoDAO;
+
 public class Produto {
 
 	private int PRO_CODIGO;
@@ -63,5 +66,25 @@ public class Produto {
 				+ "\n	NOME: " + this.getPRO_NOME()
 				+ "\n	DESCRIÇÃO: " + this.getPRO_DESCRICAO()
 				+ "\n	VALOR: R$" + this.getPRO_VALOR() + "\n";
+	}
+	
+	public static boolean existeProduto(int codigoProduto) {
+		Produto produto = ProdutoDAO.getProduto(codigoProduto);
+		if(produto.getPRO_CODIGO() == 0) {
+			return false;
+		}
+		else {
+			return true;
+		}
+	}
+
+	public static boolean emEstoque(int codigoProduto, int quantidade) {
+		Produto produto = ProdutoDAO.getProduto(codigoProduto);
+		if(produto.getPRO_ESTOQUE() >= quantidade) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 }

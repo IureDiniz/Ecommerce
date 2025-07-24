@@ -1,6 +1,5 @@
 package br.com.eccomerce.model;
 
-import br.com.eccomerce.dao.ClienteDAO;
 import br.com.eccomerce.dao.ProdutoDAO;
 
 public class Produto {

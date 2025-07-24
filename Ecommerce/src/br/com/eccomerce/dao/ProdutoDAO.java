@@ -8,7 +8,6 @@ import java.util.List;
 import com.mysql.cj.jdbc.JdbcPreparedStatement;
 
 import br.com.eccomerce.factory.ConnectionFactory;
-import br.com.eccomerce.model.Cliente;
 import br.com.eccomerce.model.Produto;
 
 public class ProdutoDAO {

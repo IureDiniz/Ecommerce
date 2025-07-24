@@ -58,7 +58,7 @@ public class TerminalGUI {
 				linhaComposta();
 				System.out.print("VALOR DIGITADO INVALIDO");
 				linhaComposta();
-				if(!leitor.hasNextLine());{
+				if(leitor.hasNextLine());{
 					leitor.nextLine();
 				}
 				
@@ -253,7 +253,7 @@ public class TerminalGUI {
 			
 			if(produtos.isEmpty())
 			{
-				System.out.println("\nNenhum produto foi encontrado");
+				System.out.print("Nenhum produto foi encontrado");
 			}
 			else
 			{
@@ -273,6 +273,9 @@ public class TerminalGUI {
 		try {
 
 			System.out.print("Nome: ");
+			if(leitor.hasNextLine()) {
+				leitor.nextLine();
+			}
 			String nome = leitor.nextLine();
 			
 			System.out.print("Descrição: ");
@@ -293,7 +296,7 @@ public class TerminalGUI {
 				System.out.print("ERRO AO CADASTRAR PRODUTO: " + e.toString());
 				linhaComposta();
 			}
-			leitor.close();
+			
 		}
 		catch(InputMismatchException e) {
 			linhaComposta();
@@ -501,6 +504,7 @@ public class TerminalGUI {
 	
 	private static void adicionarPeidido() {
 		try {
+			List<Produto> produtos = new ArrayList<Produto>();
 			int codigoCliente, codigoProduto;
 			int nItens;
 			int qtdeProduto;
@@ -521,8 +525,6 @@ public class TerminalGUI {
 					codigoProduto = leitor.nextInt();
 					
 					if(Produto.existeProduto(codigoProduto)) {
-						
-						List<Produto> produtos = new ArrayList<Produto>();
 						produtos.add(ProdutoDAO.getProduto(codigoProduto));
 						
 						
@@ -530,10 +532,12 @@ public class TerminalGUI {
 						qtdeProduto = leitor.nextInt();
 						
 						if(Produto.emEstoque(codigoProduto, qtdeProduto)) {
+							
 							Pedido ultimoPedido = PedidoDAO.getLastPedido();
 							ProdutoPedido produtoPedido = new ProdutoPedido(ultimoPedido.getPED_CODIGO(), codigoProduto, qtdeProduto);
 							ProdutoPedidoDAO.saveProdutoPedido(produtoPedido);
 							
+							System.out.println("\n\n " + i + " " + produtos.get(i) + "\n");
 							produtos.get(i).setPRO_ESTOQUE(produtos.get(i).getPRO_ESTOQUE() - qtdeProduto);
 							for(Produto item : produtos) {
 								ProdutoDAO.updateProduto(item);
@@ -552,8 +556,7 @@ public class TerminalGUI {
 						linhaSimples();
 						i--;
 					}
-				}
-				
+				}				
 			}
 			else {
 				linhaSimples();
@@ -581,7 +584,7 @@ public class TerminalGUI {
 			int codigo = leitor.nextInt();
 			Pedido pedido = PedidoDAO.listPedido(codigo);
 			
-			if(pedido.getPED_CODIGO() == 0) {
+			if(pedido == null) {
 				linhaSimples();
 				System.out.println("Pedido não encontrado");
 				linhaSimples();
@@ -617,7 +620,7 @@ public class TerminalGUI {
 			Pedido pedido = PedidoDAO.listPedido(codigo);
 			List<ProdutoPedido> produtosPedidosAntigos = ProdutoPedidoDAO.listProdutoPedido(codigo);
 			
-			if(pedido.getPED_CODIGO() == 0) {
+			if(pedido == null) {
 				linhaSimples();
 				System.out.print("Pedido não encontrado");
 				linhaSimples();
@@ -695,7 +698,7 @@ public class TerminalGUI {
 			if(clientes.isEmpty())
 			{
 				linhaSimples();
-				System.out.println("\nNenhum cliente foi encontrado");
+				System.out.print("Nenhum cliente foi encontrado");
 				linhaSimples();
 			}
 			else
@@ -715,6 +718,9 @@ public class TerminalGUI {
 	private static void adicionarCliente() {
 		try {
 			System.out.print("Nome: ");
+			if(leitor.hasNextLine()) {
+				leitor.nextLine();
+			}
 			String nome = leitor.nextLine();
 			
 			System.out.print("Email: ");

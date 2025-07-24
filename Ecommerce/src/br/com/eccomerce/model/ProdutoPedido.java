@@ -1,7 +1,5 @@
 package br.com.eccomerce.model;
 
-import br.com.eccomerce.dao.PedidoDAO;
-
 public class ProdutoPedido {
 	private int PRP_CODIGO;
 	private int PED_CODIGO;

@@ -8,10 +8,10 @@
     <fullyQualifiedTypeName name="br.com.eccomerce.model.Pedido"/>
     <fullyQualifiedTypeName name="br.com.eccomerce.model.ProdutoPedido"/>
     <fullyQualifiedTypeName name="br.com.eccomerce.model.Cliente"/>
-    <fullyQualifiedTypeName name="br.com.eccomerce.dao.ClienteDAO"/>
     <fullyQualifiedTypeName name="br.com.eccomerce.dao.ProdutoPedidoDAO"/>
-    <fullyQualifiedTypeName name="br.com.eccomerce.dao.ProdutoDAO"/>
     <fullyQualifiedTypeName name="java.util.Date"/>
     <fullyQualifiedTypeName name="java.sql.Date"/>
     <fullyQualifiedTypeName name="br.com.eccomerce.dao.PedidoDAO"/>
+    <fullyQualifiedTypeName name="br.com.eccomerce.dao.ClienteDAO"/>
+    <fullyQualifiedTypeName name="br.com.eccomerce.dao.ProdutoDAO"/>
 </qualifiedTypeNameHistroy>
