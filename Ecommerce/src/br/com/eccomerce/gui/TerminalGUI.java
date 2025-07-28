@@ -21,6 +21,8 @@ public class TerminalGUI {
 	
 	public static void menu() {
 		boolean continuar = true;
+		
+	    // loop principal que exibe o menu enquanto 'continuar' for true
 		while(continuar) {
 			try {
 				int escolha;
@@ -32,7 +34,7 @@ public class TerminalGUI {
 									+ "4. Sair\n"
 									+ "Sua escolha: ");
 				escolha = leitor.nextInt();
-				leitor.nextLine();
+				leitor.nextLine(); // Limpa o buffer
 				linhaCompostaDupla();
 				
 				switch(escolha) {
@@ -244,7 +246,7 @@ public class TerminalGUI {
 	}
 
 	private static void menuCliente() {
-		
+
 		boolean continuar = true;
 		while(continuar) {
 			try {
@@ -328,20 +330,23 @@ public class TerminalGUI {
 	// PRODUTO
 	private static void listarProduto() {
 		try {
+			// Cria uma lista com todos o produtos no banco de dados
 			List<Produto> produtos = ProdutoDAO.listProduto();
 			
-			if(produtos.isEmpty())
-			{
+			// Verifica se lista está vazia
+			if(produtos.isEmpty()) {
 				System.out.println();
 				linhaSimples();
 				System.out.println("Nenhum produto foi encontrado");
 				linhaSimples();
 			}
-			else
-			{
+			else {
+				// Imprime os produtos da lista com espaço entre eles até o penultimo produto
 				int i = 1;
 				for(Produto produto : produtos) {
 					System.out.println(produto.toString());
+					
+					// Verifica se o produto NÃO é o último
 					if(i != produtos.size()) {
 						System.out.println();
 					}
@@ -359,11 +364,13 @@ public class TerminalGUI {
 
 	private static void adicionarProduto() {
 		try {
-
+			// Lê os dados do produto
 			System.out.print("Nome: ");
-			if(leitor.hasNextLine()) {
+			
+			if(leitor.hasNextLine()) { // Limpa buffer
 				leitor.nextLine();
 			}
+			
 			String nome = leitor.nextLine();
 			
 			System.out.print("Descrição: ");
@@ -372,6 +379,7 @@ public class TerminalGUI {
 			System.out.print("Valor: R$");
 			double valor = leitor.nextDouble();
 			
+			// Verifica se o valor do produto é menor que 1
 			if(valor < 1) {
 				System.out.println();
 				linhaSimples();
@@ -383,6 +391,7 @@ public class TerminalGUI {
 			System.out.print("Quantidade: ");
 			int quantidade = leitor.nextInt();
 			
+			// Verifica se a quantidade é menor que zero
 			if(quantidade < 0) {
 				System.out.println();
 				linhaSimples();
@@ -428,6 +437,7 @@ public class TerminalGUI {
 			
 			Produto produto = ProdutoDAO.getProduto(codigo);
 			
+			// Verifica se o produto adquirido está em branco
 			if(produto.getPRO_CODIGO() == 0) {
 				System.out.println();
 				linhaSimples();
@@ -435,6 +445,7 @@ public class TerminalGUI {
 				linhaSimples();
 			}
 			else {
+				// Exibe o produto selecionado e pede confirmação de exclusão
 				System.out.println(produto.toString());
 				System.out.print("Deseja excluir(S/N)?  ");
 				String resposta = leitor.next();
@@ -472,6 +483,7 @@ public class TerminalGUI {
 			
 			Produto produto = ProdutoDAO.getProduto(codigo);
 			
+			// Verifica se o produto adquirido está em branco
 			if(produto.getPRO_CODIGO() == 0) {
 				System.out.println();
 				linhaSimples();
@@ -479,6 +491,7 @@ public class TerminalGUI {
 				linhaSimples();
 			}
 			else {
+				// Exibe o produto selecionado e confirma modificação
 				System.out.println(produto.toString());
 				System.out.print("Deseja modificar(S/N)?  ");
 				String resposta = leitor.next();
@@ -552,7 +565,10 @@ public class TerminalGUI {
 			}
 			String nome = leitor.nextLine();
 			
+			// Cria uma lista com todos os produtos com nome semelhante à pesquisa
 			List<Produto> produtos = ProdutoDAO.listProduto(nome);
+			
+			// Verifica se a lista está vaiza
 			if(produtos.isEmpty()) {
 				System.out.println();
 				linhaSimples();
@@ -560,6 +576,7 @@ public class TerminalGUI {
 				linhaSimples();
 			}
 			else {
+				// Exibe os produtos da lista
 				System.out.println();
 				int i = 1;
 				for(Produto produto : produtos) {
@@ -595,6 +612,7 @@ public class TerminalGUI {
 			
 			List<Produto> produtos = ProdutoDAO.listProduto(precoMinimo, precoMaximo);
 			
+			// Verifica se a lista está vazia
 			if(produtos.isEmpty()) {
 				System.out.println();
 				linhaSimples();
@@ -602,6 +620,7 @@ public class TerminalGUI {
 				linhaSimples();
 			}
 			else {
+				// Imprime todos os produtos da lista
 				System.out.println();
 				int i = 1;
 				for(Produto produto : produtos) {
@@ -635,12 +654,14 @@ public class TerminalGUI {
 			List<Pedido> pedidos = PedidoDAO.listPedido();
 			
 			if(pedidos.isEmpty()) {
+				// Verifica se a lista de pedidos está vazia
 				System.out.println();
 				linhaSimples();
 				System.out.println("Nenhum pedido encontrado");
 				linhaSimples();
 			}
 			else {
+				// Exibe todos os elementos da lista
 				for(Pedido pedido : pedidos) {
 					Venda venda = new Venda(pedido.getPED_CODIGO());
 					System.out.println(venda.toString());
@@ -665,10 +686,12 @@ public class TerminalGUI {
 			System.out.print("CODIGO DO CLIENTE: ");
 			codigoCliente = leitor.nextInt();
 			
+			// Verifica se o cliete existe
 			if(Cliente.existeCliente(codigoCliente)) {
 				System.out.print("NUMERO DE ITENS: ");
 				nItens = leitor.nextInt();
 				
+				// Verifica se a quantidade de itens vendidosé menor que um
 				if(nItens < 1) {
 					System.out.println();
 					linhaSimples();
@@ -676,23 +699,27 @@ public class TerminalGUI {
 					linhaSimples();
 				}
 				
+				// Define a data atual e salva o pedido
 				Date dataAtual = new Date();
 				Pedido pedido = new Pedido(codigoCliente, dataAtual);
 				PedidoDAO.savePedido(pedido);
 				
+				// Laço para salvar os produtos
 				for(int i = 0; i < nItens; i++) {
 					System.out.print("CODIGO DO PRODUTO: ");
 					codigoProduto = leitor.nextInt();
 					
+					// Verifica se o produto existe e o adiciona a venda
 					if(Produto.existeProduto(codigoProduto)) {
 						produtos.add(ProdutoDAO.getProduto(codigoProduto));
-						
 						
 						System.out.print("QUANTIDADE: ");
 						qtdeProduto = leitor.nextInt();
 						
+						// Verifica se a quantidade é maior que 1
 						if(qtdeProduto > 1) {
 							
+							// Verifica se ainda há estoque do produto e confirma se o produto deve ser adicionado
 							if(Produto.emEstoque(codigoProduto, qtdeProduto)) {
 								
 								System.out.println("\n\n " + i+1 + " " + produtos.get(i) + "\n");
@@ -711,7 +738,9 @@ public class TerminalGUI {
 									for(Produto item : produtos) {
 										ProdutoDAO.updateProduto(item);
 									}
+									
 								}
+								
 							}
 							
 							else {
@@ -722,6 +751,7 @@ public class TerminalGUI {
 								i--;
 							}
 						}
+						
 						else {
 							System.out.println();
 							linhaSimples();
@@ -729,6 +759,7 @@ public class TerminalGUI {
 							linhaSimples();
 						}
 					}
+					
 					else {
 						System.out.println();
 						linhaSimples();
@@ -738,6 +769,7 @@ public class TerminalGUI {
 					}
 				}				
 			}
+			
 			else {
 				System.out.println();
 				linhaSimples();
@@ -767,6 +799,7 @@ public class TerminalGUI {
 			int codigo = leitor.nextInt();
 			Pedido pedido = PedidoDAO.listPedido(codigo);
 			
+			// Verifica se o pedido existe
 			if(pedido == null) {
 				System.out.println();
 				linhaSimples();
@@ -774,6 +807,7 @@ public class TerminalGUI {
 				linhaSimples();
 			}
 			else {
+				// Exclui todos os produtoPedidos e o pedido em sí
 				List<ProdutoPedido> produtosPedidos = ProdutoPedidoDAO.listProdutoPedido(codigo);
 				for(ProdutoPedido item : produtosPedidos) {
 					ProdutoPedidoDAO.deleteProdutoPedido(item);
@@ -803,9 +837,11 @@ public class TerminalGUI {
 			System.out.print("Digite o código do pedido: ");
 			int codigo = leitor.nextInt();
 			
+			// Recebe o pedido e os produtoPedidos ligados a ele
 			Pedido pedido = PedidoDAO.listPedido(codigo);
 			List<ProdutoPedido> produtosPedidosAntigos = ProdutoPedidoDAO.listProdutoPedido(codigo);
 			
+			// Verifica se o pedido é nulo
 			if(pedido == null) {
 				System.out.println();
 				linhaSimples();
@@ -822,6 +858,7 @@ public class TerminalGUI {
 
 				Cliente testaCliente = ClienteDAO.getCliente(codigoCliente);
 				
+				// Verifica se o cliente é vazio
 				if(testaCliente.getCLI_CODIGO() == 0) {
 					System.out.println();
 					linhaSimples();
@@ -836,16 +873,18 @@ public class TerminalGUI {
 					pedido.setCLI_CODIGO(codigoCliente);
 					PedidoDAO.updatePedido(pedido);
 					
+					// Laço para adicionar os novos itens
 					for(int i = 0; i < nItens; i++) {
 						System.out.print("CODIGO DO PRODUTO: ");
 						codigoProduto = leitor.nextInt();
 						
 						Produto testaProduto = ProdutoDAO.getProduto(codigoProduto);
 			
+						// Verifica se o produto existe
 						if(testaProduto.getPRO_CODIGO() == 0) {
 							System.out.println();
 							linhaSimples();
-							System.out.print("Produto não localizado");
+							System.out.println("Produto não localizado");
 							linhaSimples();
 							i--;
 						}
@@ -860,11 +899,12 @@ public class TerminalGUI {
 								linhaSimples();
 							}
 							
+							// Salva os produtos novos
 							ProdutoPedido produtoPedido = new ProdutoPedido(pedido.getPED_CODIGO(), codigoProduto, qtdeProduto);
 							ProdutoPedidoDAO.saveProdutoPedido(produtoPedido);
 						}
 						
-						
+						// Exclui os produtos antigos
 						for(ProdutoPedido item : produtosPedidosAntigos) {
 							ProdutoPedidoDAO.deleteProdutoPedido(item);
 						}
@@ -897,15 +937,15 @@ public class TerminalGUI {
 		try {
 			List<Cliente> clientes = ClienteDAO.getCliente();
 			
-			if(clientes.isEmpty())
-			{
+			// Verifica se a lista está vaiza
+			if(clientes.isEmpty())  {
 				System.out.println();
 				linhaSimples();
 				System.out.println("Nenhum cliente foi encontrado");
 				linhaSimples();
 			}
-			else
-			{
+			else {
+				// Imprime os elementos da lista
 				int i = 1;
 				for(Cliente cliente : clientes) {
 					System.out.println(cliente.toString());
@@ -968,6 +1008,7 @@ public class TerminalGUI {
 			
 			Cliente cliente = ClienteDAO.getCliente(codigo);
 			
+			// Verifica se o cliente está em branco
 			if(cliente.getCLI_CODIGO() == 0) {
 				System.out.println();
 				linhaSimples();
@@ -975,6 +1016,7 @@ public class TerminalGUI {
 				linhaSimples();
 			}
 			else {
+				// Exibe o cliente selecionado e confirma a exclusão
 				System.out.println(cliente.toString());
 				System.out.print("Deseja excluir(S/N)?  ");
 				String resposta = leitor.next();
@@ -1013,12 +1055,14 @@ public class TerminalGUI {
 			Cliente cliente= ClienteDAO.getCliente(codigo);
 			
 			if(cliente.getCLI_CODIGO() == 0) {
+				// Confere se o cliente está vazio
 				System.out.println();
 				linhaSimples();
 				System.out.println("Cliente não encontrado");
 				linhaSimples();
 			}
 			else {
+				// Exibe o cliente e confirma a modificação
 				System.out.println(cliente.toString());
 				System.out.print("Deseja modificar(S/N)?  ");
 				String resposta = leitor.next();
