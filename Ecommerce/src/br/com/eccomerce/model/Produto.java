@@ -57,14 +57,14 @@ public class Produto {
 				+ "\nNOME: " + this.getPRO_NOME()
 				+ "\nDESCRIÇÃO: " + this.getPRO_DESCRICAO()
 				+ "\nVALOR: R$" + this.getPRO_VALOR()
-				+ "\nESTOQUE: " + this.getPRO_ESTOQUE() + "\n";
+				+ "\nESTOQUE: " + this.getPRO_ESTOQUE();
 	}
 	
 	public String toStringSpace() {
 		return "		CODIGO: " + this.getPRO_CODIGO()
 				+ "\n	NOME: " + this.getPRO_NOME()
 				+ "\n	DESCRIÇÃO: " + this.getPRO_DESCRICAO()
-				+ "\n	VALOR: R$" + this.getPRO_VALOR() + "\n";
+				+ "\n	VALOR: R$" + this.getPRO_VALOR();
 	}
 	
 	public static boolean existeProduto(int codigoProduto) {

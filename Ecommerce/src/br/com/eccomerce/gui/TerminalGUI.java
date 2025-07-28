@@ -46,17 +46,23 @@ public class TerminalGUI {
 					menuCliente();
 					break;
 				case 4:
+					System.out.println();
+					linhaSimples();
 					System.out.println("Saindo...");
+					linhaSimples();
 					continuar = false;
 					break;
 				default:
+					linhaSimples();
 					System.out.println("Escolha invalida");
+					linhaSimples();
 					break;
 				}
 			}
 			catch(Exception e) {
+				System.out.println();
 				linhaComposta();
-				System.out.print("VALOR DIGITADO INVALIDO");
+				System.out.println("VALOR DIGITADO INVALIDO");
 				linhaComposta();
 				if(leitor.hasNextLine());{
 					leitor.nextLine();
@@ -75,7 +81,6 @@ public class TerminalGUI {
 		while(continuar) {
 			try {
 				int escolha;
-				linhaComposta();
 				System.out.print("\n--- MENU PRODUTO --- \n" 
 									+ "1. Listar Produtos\n"
 									+ "2. Adicionar Produtos\n"
@@ -89,49 +94,69 @@ public class TerminalGUI {
 				
 				switch(escolha) {
 				case 1:
+					System.out.println();
 					linhaComposta();
 					listarProduto();
+					linhaComposta();
 					break;
 				case 2:
+					System.out.println();
 					linhaComposta();
 					adicionarProduto();
+					linhaComposta();
 					break;
 				case 3: 
+					System.out.println();
 					linhaComposta();
 					excluirProduto();
+					linhaComposta();
 					break;
 				case 4:
+					System.out.println();
 					linhaComposta();
 					modificarProduto();
+					linhaComposta();
 					break;
 				case 5:
+					System.out.println();
 					linhaComposta();
 					procurarNomeProduto();
+					linhaComposta();
 					break;
 				case 6:
+					System.out.println();
 					linhaComposta();
 					procurarPrecoProduto();
+					linhaComposta();
 					break;
 				case 7:
-					System.out.println("\nVoltando...");
-					linhaComposta();
+					System.out.println();
+					linhaSimples();
+					System.out.println("Voltando...");
+					linhaSimples();
 					continuar = false;
 					break;
 				default:
-					System.out.println("\nEscolha invalida");
+					System.out.println();
+					linhaSimples();
+					System.out.println("Escolha invalida");
+					linhaSimples();
+					System.out.println();
 					linhaComposta();
 					break;
 				}
 			}
 			catch(InputMismatchException e) {
+				System.out.println();
 				linhaComposta();
-				System.out.print("VALOR DIGITADO INVALIDO");
+				System.out.println("VALOR DIGITADO INVALIDO");
 				linhaComposta();
 				leitor.nextLine(); // Limpa o buffer
 			}
 			catch(Exception e) {
+				System.out.println();
 				linhaComposta();
-				System.out.print("OCORREU UM ERRO " + e);
+				System.out.println("OCORREU UM ERRO " + e);
 				linhaComposta();
 				leitor.nextLine(); // Limpa o buffer
 			}
@@ -151,39 +176,66 @@ public class TerminalGUI {
 									+ "5. Voltar\n"
 									+ "Sua escolha: ");
 				escolha = leitor.nextInt();
-				System.out.println();
 				
 				switch(escolha) {
 				case 1:
+					System.out.println();
+					linhaComposta();
 					listarPedido();
+					System.out.println();
+					linhaComposta();
 					break;
 				case 2:
+					System.out.println();
+					linhaComposta();
 					adicionarPeidido();
+					System.out.println();
+					linhaComposta();
 					break;
 				case 3: 
+					System.out.println();
+					linhaComposta();
 					excluirPeidido();
+					System.out.println();
+					linhaComposta();
 					break;
 				case 4:
+					System.out.println();
+					linhaComposta();
 					modificarPedido();
+					System.out.println();
+					linhaComposta();
 					break;
 				case 5:
+					System.out.println();
+					linhaSimples();
 					System.out.println("Voltando...");
+					linhaSimples();
 					continuar = false;
+					System.out.println();
+					linhaComposta();
 					break;
 				default:
+					System.out.println();
+					linhaSimples();
 					System.out.println("Escolha invalida");
+					linhaSimples();
+					System.out.println();
+					linhaComposta();
 					break;
 				}
 			}
 			catch(InputMismatchException e) {
+				System.out.println();
 				linhaComposta();
-				System.out.print("VALOR DIGITADO INVALIDO");
+				System.out.println("VALOR DIGITADO INVALIDO");
 				linhaComposta();
 				leitor.nextLine(); // Limpa o buffer
 			}
 			catch(Exception e) {
+				System.out.println();
 				linhaComposta();
-				System.out.print("OCORREU UM ERRO " + e);
+				System.out.println("OCORREU UM ERRO " + e);
 				linhaComposta();
 				leitor.nextLine(); // Limpa o buffer
 			}
@@ -205,39 +257,66 @@ public class TerminalGUI {
 									+ "5. Voltar\n"
 									+ "Sua escolha: ");
 				escolha = leitor.nextInt();
-				System.out.println();
 				
 				switch(escolha) {
 				case 1:
+					System.out.println();
+					linhaComposta();
 					listarCliente();
+					linhaComposta();
 					break;
 				case 2:
+					System.out.println();
+					System.out.println();
+					linhaComposta();
 					adicionarCliente();
+					System.out.println();
+					linhaComposta();
 					break;
 				case 3: 
+					System.out.println();
+					linhaComposta();
 					excluirCliente();
+					System.out.println();
+					linhaComposta();
 					break;
 				case 4:
+					System.out.println();
+					linhaComposta();
 					modificarCliente();
+					System.out.println();
+					linhaComposta();
 					break;
 				case 5:
+					System.out.println();
+					linhaSimples();
 					System.out.println("Voltando...");
+					linhaSimples();
+					System.out.println();
+					linhaComposta();
 					continuar = false;
 					break;
 				default:
+					System.out.println();
+					linhaSimples();
 					System.out.println("Escolha invalida");
+					linhaSimples();
+					System.out.println();
+					linhaComposta();
 					break;
 				}
 			}
 			catch(InputMismatchException e) {
+				System.out.println();
 				linhaComposta();
-				System.out.print("VALOR DIGITADO INVALIDO");
+				System.out.println("VALOR DIGITADO INVALIDO");
 				linhaComposta();
 				leitor.nextLine(); // Limpa o buffer
 			}
 			catch(Exception e) {
+				System.out.println();
 				linhaComposta();
-				System.out.print("OCORREU UM ERRO " + e);
+				System.out.println("OCORREU UM ERRO " + e);
 				linhaComposta();
 				leitor.nextLine(); // Limpa o buffer
 			}
@@ -253,18 +332,27 @@ public class TerminalGUI {
 			
 			if(produtos.isEmpty())
 			{
-				System.out.print("Nenhum produto foi encontrado");
+				System.out.println();
+				linhaSimples();
+				System.out.println("Nenhum produto foi encontrado");
+				linhaSimples();
 			}
 			else
 			{
+				int i = 1;
 				for(Produto produto : produtos) {
 					System.out.println(produto.toString());
+					if(i != produtos.size()) {
+						System.out.println();
+					}
+					i++;
 				}
 			}
 		}
 		catch(Exception e) {
+			System.out.println();
 			linhaComposta();
-			System.out.print("OCORREU UM ERRO " + e);
+			System.out.println("OCORREU UM ERRO " + e);
 			linhaComposta();
 		}
 	}
@@ -284,29 +372,49 @@ public class TerminalGUI {
 			System.out.print("Valor: R$");
 			double valor = leitor.nextDouble();
 			
+			if(valor < 1) {
+				System.out.println();
+				linhaSimples();
+				System.out.println("Valor do produto invalido");
+				linhaSimples();
+				return;
+			}
+			
 			System.out.print("Quantidade: ");
 			int quantidade = leitor.nextInt();
+			
+			if(quantidade < 0) {
+				System.out.println();
+				linhaSimples();
+				System.out.println("Quantidade do produto invalida");
+				linhaSimples();
+				return;
+			}
 
 			Produto produto = new Produto(nome, descricao, valor, quantidade);
+			
 			try {
 				ProdutoDAO.saveProduto(produto);
 			}
 			catch(Exception e) {
+				System.out.println();
 				linhaComposta();
-				System.out.print("ERRO AO CADASTRAR PRODUTO: " + e.toString());
+				System.out.println("ERRO AO CADASTRAR PRODUTO: " + e.toString());
 				linhaComposta();
 			}
 			
 		}
 		catch(InputMismatchException e) {
+			System.out.println();
 			linhaComposta();
-			System.out.print("VALOR DIGITADO INVALIDO");
+			System.out.println("VALOR DIGITADO INVALIDO");
 			linhaComposta();
 			leitor.nextLine(); // Limpa o buffer
 		}
 		catch(Exception e) {
+			System.out.println();
 			linhaComposta();
-			System.out.print("OCORREU UM ERRO " + e);
+			System.out.println("OCORREU UM ERRO " + e);
 			linhaComposta();
 			leitor.nextLine(); // Limpa o buffer
 		}
@@ -321,17 +429,20 @@ public class TerminalGUI {
 			Produto produto = ProdutoDAO.getProduto(codigo);
 			
 			if(produto.getPRO_CODIGO() == 0) {
-				linhaComposta();
-				System.out.print("Produto não encontrado");
-				linhaComposta();
+				System.out.println();
+				linhaSimples();
+				System.out.println("Produto não encontrado");
+				linhaSimples();
 			}
 			else {
 				System.out.println(produto.toString());
 				System.out.print("Deseja excluir(S/N)?  ");
 				String resposta = leitor.next();
+				System.out.println();
 				
 				if(resposta.toCharArray()[0] == 'S' || resposta.toCharArray()[0] == 's') {
 					ProdutoDAO.deleteProduto(produto);
+					System.out.println("Produto excluido com sucesso");
 				}
 				else {
 					System.out.println("Nenhum produto foi excluido");
@@ -339,12 +450,14 @@ public class TerminalGUI {
 			}		
 		}
 		catch(InputMismatchException e) {
+			System.out.println();
 			linhaComposta();
 			System.out.print("VALOR DIGITADO INVALIDO");
 			linhaComposta();
 			leitor.nextLine(); // Limpa o buffer
 		}
 		catch(Exception e) {
+			System.out.println();
 			linhaComposta();
 			System.out.print("OCORREU UM ERRO " + e);
 			linhaComposta();
@@ -360,14 +473,16 @@ public class TerminalGUI {
 			Produto produto = ProdutoDAO.getProduto(codigo);
 			
 			if(produto.getPRO_CODIGO() == 0) {
-				linhaComposta();
-				System.out.print("Produto não encontrado");
-				linhaComposta();
+				System.out.println();
+				linhaSimples();
+				System.out.println("Produto não encontrado");
+				linhaSimples();
 			}
 			else {
 				System.out.println(produto.toString());
 				System.out.print("Deseja modificar(S/N)?  ");
 				String resposta = leitor.next();
+				System.out.println();
 				
 				if(resposta.toCharArray()[0] == 'S' || resposta.toCharArray()[0] == 's') {
 					
@@ -381,8 +496,24 @@ public class TerminalGUI {
 					System.out.print("NOVO VALOR: R$");
 					double valor = leitor.nextDouble();
 					
+					if(valor < 1) {
+						System.out.println();
+						linhaSimples();
+						System.out.println("Valor do produto invalido");
+						linhaSimples();
+						return;
+					}
+					
 					System.out.print("NOVO ESTOQUE: ");
 					int estoque = leitor.nextInt();
+					
+					if(estoque < 0) {
+						System.out.println();
+						linhaSimples();
+						System.out.println("Quantidade do produto invalida");
+						linhaSimples();
+						return;
+					}
 					
 					produto.setPRO_NOME(nome);
 					produto.setPRO_DESCRICAO(descricao);
@@ -398,14 +529,16 @@ public class TerminalGUI {
 			}
 		}
 		catch(InputMismatchException e) {
+			System.out.println();
 			linhaComposta();
-			System.out.print("VALOR DIGITADO INVALIDO");
+			System.out.println("VALOR DIGITADO INVALIDO");
 			linhaComposta();
 			leitor.nextLine(); // Limpa o buffer
 		}
 		catch(Exception e) {
+			System.out.println();
 			linhaComposta();
-			System.out.print("OCORREU UM ERRO " + e);
+			System.out.println("OCORREU UM ERRO " + e);
 			linhaComposta();
 			leitor.nextLine(); // Limpa o buffer
 		}
@@ -421,24 +554,33 @@ public class TerminalGUI {
 			
 			List<Produto> produtos = ProdutoDAO.listProduto(nome);
 			if(produtos.isEmpty()) {
-				linhaComposta();
-				System.out.print("Nenhum produto encontrado");
-				linhaComposta();
+				System.out.println();
+				linhaSimples();
+				System.out.println("Nenhum produto encontrado");
+				linhaSimples();
 			}
 			else {
+				System.out.println();
+				int i = 1;
 				for(Produto produto : produtos) {
 					System.out.println(produto.toString());
+					if(i != produtos.size()) {
+						System.out.println();
+					}
+					i++;
 				}
 			}
 		}
 		catch(InputMismatchException e) {
+			System.out.println();
 			linhaComposta();
-			System.out.print("VALOR DIGITADO INVALIDO");
+			System.out.println("VALOR DIGITADO INVALIDO");
 			linhaComposta();
 		}
 		catch(Exception e) {
+			System.out.println();
 			linhaComposta();
-			System.out.print("OCORREU UM ERRO " + e);
+			System.out.println("OCORREU UM ERRO " + e);
 			linhaComposta();
 		}
 	}
@@ -454,25 +596,34 @@ public class TerminalGUI {
 			List<Produto> produtos = ProdutoDAO.listProduto(precoMinimo, precoMaximo);
 			
 			if(produtos.isEmpty()) {
-				linhaComposta();
-				System.out.print("Nenhum produto encontrado");
-				linhaComposta();
+				System.out.println();
+				linhaSimples();
+				System.out.println("Nenhum produto encontrado");
+				linhaSimples();
 			}
 			else {
+				System.out.println();
+				int i = 1;
 				for(Produto produto : produtos) {
 					System.out.println(produto.toString());
+					if(i != produtos.size()) {
+						System.out.println();
+					}
+					i++;
 				}
 			}
 		}
 		catch(InputMismatchException e) {
+			System.out.println();
 			linhaComposta();
-			System.out.print("VALOR DIGITADO INVALIDO");
+			System.out.println("VALOR DIGITADO INVALIDO");
 			linhaComposta();
 			leitor.nextLine(); // Limpa o buffer
 		}
 		catch(Exception e) {
+			System.out.println();
 			linhaComposta();
-			System.out.print("OCORREU UM ERRO: " + e);
+			System.out.println("OCORREU UM ERRO: " + e);
 			linhaComposta();
 			leitor.nextLine(); // Limpa o buffer
 		}
@@ -484,8 +635,9 @@ public class TerminalGUI {
 			List<Pedido> pedidos = PedidoDAO.listPedido();
 			
 			if(pedidos.isEmpty()) {
+				System.out.println();
 				linhaSimples();
-				System.out.print("Nenhum pedido encontrado");
+				System.out.println("Nenhum pedido encontrado");
 				linhaSimples();
 			}
 			else {
@@ -496,8 +648,9 @@ public class TerminalGUI {
 			}
 		}
 		catch(Exception e) {
+			System.out.println();
 			linhaComposta();
-			System.out.print("OCORREU UM ERRO: " + e);
+			System.out.println("OCORREU UM ERRO: " + e);
 			linhaComposta();
 		}
 	}
@@ -516,6 +669,13 @@ public class TerminalGUI {
 				System.out.print("NUMERO DE ITENS: ");
 				nItens = leitor.nextInt();
 				
+				if(nItens < 1) {
+					System.out.println();
+					linhaSimples();
+					System.out.println("Número de itens inválido");
+					linhaSimples();
+				}
+				
 				Date dataAtual = new Date();
 				Pedido pedido = new Pedido(codigoCliente, dataAtual);
 				PedidoDAO.savePedido(pedido);
@@ -531,48 +691,71 @@ public class TerminalGUI {
 						System.out.print("QUANTIDADE: ");
 						qtdeProduto = leitor.nextInt();
 						
-						if(Produto.emEstoque(codigoProduto, qtdeProduto)) {
+						if(qtdeProduto > 1) {
 							
-							Pedido ultimoPedido = PedidoDAO.getLastPedido();
-							ProdutoPedido produtoPedido = new ProdutoPedido(ultimoPedido.getPED_CODIGO(), codigoProduto, qtdeProduto);
-							ProdutoPedidoDAO.saveProdutoPedido(produtoPedido);
+							if(Produto.emEstoque(codigoProduto, qtdeProduto)) {
+								
+								System.out.println("\n\n " + i+1 + " " + produtos.get(i) + "\n");
+								
+								System.out.print("Deseja adicionar esse produto(S/N)?  ");
+								String resposta = leitor.next();
+								System.out.println();
+								
+								if(resposta.toCharArray()[0] == 'S' || resposta.toCharArray()[0] == 's') {
+									
+									Pedido ultimoPedido = PedidoDAO.getLastPedido();
+									ProdutoPedido produtoPedido = new ProdutoPedido(ultimoPedido.getPED_CODIGO(), codigoProduto, qtdeProduto);
+									ProdutoPedidoDAO.saveProdutoPedido(produtoPedido);
+									
+									produtos.get(i).setPRO_ESTOQUE(produtos.get(i).getPRO_ESTOQUE() - qtdeProduto);
+									for(Produto item : produtos) {
+										ProdutoDAO.updateProduto(item);
+									}
+								}
+							}
 							
-							System.out.println("\n\n " + i + " " + produtos.get(i) + "\n");
-							produtos.get(i).setPRO_ESTOQUE(produtos.get(i).getPRO_ESTOQUE() - qtdeProduto);
-							for(Produto item : produtos) {
-								ProdutoDAO.updateProduto(item);
+							else {
+								System.out.println();
+								linhaSimples();
+								System.out.println("Quantidade maior que o estoque");
+								linhaSimples();
+								i--;
 							}
 						}
 						else {
+							System.out.println();
 							linhaSimples();
-							System.out.print("Quantidade maior que o estoque");
+							System.out.println("Não é possivel fazer venda de quantidade nula ou negativa");
 							linhaSimples();
-							i--;
 						}
 					}
 					else {
+						System.out.println();
 						linhaSimples();
-						System.out.print("Produto não encontrado");
+						System.out.println("Produto não encontrado");
 						linhaSimples();
 						i--;
 					}
 				}				
 			}
 			else {
+				System.out.println();
 				linhaSimples();
-				System.out.print("Cliente não localizado");
+				System.out.println("Cliente não localizado");
 				linhaSimples();
 			}
 		}
 		catch(InputMismatchException e) {
+			System.out.println();
 			linhaComposta();
-			System.out.print("VALOR DIGITADO INVALIDO");
+			System.out.println("VALOR DIGITADO INVALIDO");
 			linhaComposta();
 			leitor.nextLine(); // Limpa o buffer
 		}
 		catch(Exception e) {
+			System.out.println();
 			linhaComposta();
-			System.out.print("OCORREU UM ERRO: " + e);
+			System.out.println("OCORREU UM ERRO: " + e);
 			linhaComposta();
 			leitor.nextLine(); // Limpa o buffer
 		}
@@ -585,6 +768,7 @@ public class TerminalGUI {
 			Pedido pedido = PedidoDAO.listPedido(codigo);
 			
 			if(pedido == null) {
+				System.out.println();
 				linhaSimples();
 				System.out.println("Pedido não encontrado");
 				linhaSimples();
@@ -599,14 +783,16 @@ public class TerminalGUI {
 			}
 		}
 		catch(InputMismatchException e) {
+			System.out.println();
 			linhaComposta();
-			System.out.print("VALOR DIGITADO INVALIDO");
+			System.out.println("VALOR DIGITADO INVALIDO");
 			linhaComposta();
 			leitor.nextLine(); // Limpa o buffer
 		}
 		catch(Exception e) {
+			System.out.println();
 			linhaComposta();
-			System.out.print("OCORREU UM ERRO: " + e);
+			System.out.println("OCORREU UM ERRO: " + e);
 			linhaComposta();
 			leitor.nextLine(); // Limpa o buffer
 		}
@@ -621,8 +807,9 @@ public class TerminalGUI {
 			List<ProdutoPedido> produtosPedidosAntigos = ProdutoPedidoDAO.listProdutoPedido(codigo);
 			
 			if(pedido == null) {
+				System.out.println();
 				linhaSimples();
-				System.out.print("Pedido não encontrado");
+				System.out.println("Pedido não encontrado");
 				linhaSimples();
 			}
 			else {
@@ -636,8 +823,9 @@ public class TerminalGUI {
 				Cliente testaCliente = ClienteDAO.getCliente(codigoCliente);
 				
 				if(testaCliente.getCLI_CODIGO() == 0) {
+					System.out.println();
 					linhaSimples();
-					System.out.print("Cliente não encontrado");
+					System.out.println("Cliente não encontrado");
 					linhaSimples();
 					return;
 				} 
@@ -655,6 +843,7 @@ public class TerminalGUI {
 						Produto testaProduto = ProdutoDAO.getProduto(codigoProduto);
 			
 						if(testaProduto.getPRO_CODIGO() == 0) {
+							System.out.println();
 							linhaSimples();
 							System.out.print("Produto não localizado");
 							linhaSimples();
@@ -663,6 +852,13 @@ public class TerminalGUI {
 						else {
 							System.out.print("QUANTIDADE: ");
 							qtdeProduto = leitor.nextInt();
+							
+							if(qtdeProduto < 1) {
+								System.out.println();
+								linhaSimples();
+								System.out.println("Não é possivel fazer venda de quantidade nula ou negativa");
+								linhaSimples();
+							}
 							
 							ProdutoPedido produtoPedido = new ProdutoPedido(pedido.getPED_CODIGO(), codigoProduto, qtdeProduto);
 							ProdutoPedidoDAO.saveProdutoPedido(produtoPedido);
@@ -675,16 +871,22 @@ public class TerminalGUI {
 					}
 				}
 			}
+			System.out.println();
+			linhaSimples();
+			System.out.println("Venda alterada com sucesso");
+			linhaSimples();
 		}
 		catch(InputMismatchException e) {
+			System.out.println();
 			linhaComposta();
-			System.out.print("VALOR DIGITADO INVALIDO");
+			System.out.println("VALOR DIGITADO INVALIDO");
 			linhaComposta();
 			leitor.nextLine(); // Limpa o buffer
 		}
 		catch(Exception e) {
+			System.out.println();
 			linhaComposta();
-			System.out.print("OCORREU UM ERRO: " + e);
+			System.out.println("OCORREU UM ERRO: " + e);
 			linhaComposta();
 			leitor.nextLine(); // Limpa o buffer
 		}
@@ -697,20 +899,27 @@ public class TerminalGUI {
 			
 			if(clientes.isEmpty())
 			{
+				System.out.println();
 				linhaSimples();
-				System.out.print("Nenhum cliente foi encontrado");
+				System.out.println("Nenhum cliente foi encontrado");
 				linhaSimples();
 			}
 			else
 			{
+				int i = 1;
 				for(Cliente cliente : clientes) {
 					System.out.println(cliente.toString());
+					if(i < clientes.size()) {
+						System.out.println();
+					}
+					i++;
 				}
 			}
 		}
 		catch(Exception e) {
+			System.out.println();
 			linhaComposta();
-			System.out.print("OCORREU UM ERRO: " + e);
+			System.out.println("OCORREU UM ERRO: " + e);
 			linhaComposta();
 		}
 	}
@@ -737,14 +946,16 @@ public class TerminalGUI {
 			ClienteDAO.saveCliente(cliente);
 		}
 		catch(InputMismatchException e) {
+			System.out.println();
 			linhaComposta();
-			System.out.print("VALOR DIGITADO INVALIDO");
+			System.out.println("VALOR DIGITADO INVALIDO");
 			linhaComposta();
 			leitor.nextLine(); // Limpa o buffer
 		}
 		catch(Exception e) {
+			System.out.println();
 			linhaComposta();
-			System.out.print("OCORREU UM ERRO " + e);
+			System.out.println("OCORREU UM ERRO " + e);
 			linhaComposta();
 			leitor.nextLine(); // Limpa o buffer
 		}
@@ -758,32 +969,37 @@ public class TerminalGUI {
 			Cliente cliente = ClienteDAO.getCliente(codigo);
 			
 			if(cliente.getCLI_CODIGO() == 0) {
+				System.out.println();
 				linhaSimples();
-				System.out.print("Cliente não encontrado");
+				System.out.println("Cliente não encontrado");
 				linhaSimples();
 			}
 			else {
 				System.out.println(cliente.toString());
 				System.out.print("Deseja excluir(S/N)?  ");
 				String resposta = leitor.next();
+				System.out.println();
 				
 				if(resposta.toCharArray()[0] == 'S' || resposta.toCharArray()[0] == 's') {
 					ClienteDAO.deleteCliente(cliente);
+					System.out.print("CLiente excluido com sucesso");
 				}
 				else {
-					System.out.println("Nenhum Cliente foi excluido");
+					System.out.print("Nenhum Cliente foi excluido");
 				}
 			}
 		}
 		catch(InputMismatchException e) {
+			System.out.println();
 			linhaComposta();
-			System.out.print("VALOR DIGITADO INVALIDO");
+			System.out.println("VALOR DIGITADO INVALIDO");
 			linhaComposta();
 			leitor.nextLine(); // Limpa o buffer
 		}
 		catch(Exception e) {
+			System.out.println();
 			linhaComposta();
-			System.out.print("OCORREU UM ERRO " + e);
+			System.out.println("OCORREU UM ERRO " + e);
 			linhaComposta();
 			leitor.nextLine(); // Limpa o buffer
 		}
@@ -797,14 +1013,16 @@ public class TerminalGUI {
 			Cliente cliente= ClienteDAO.getCliente(codigo);
 			
 			if(cliente.getCLI_CODIGO() == 0) {
+				System.out.println();
 				linhaSimples();
-				System.out.print("Cliente não encontrado");
+				System.out.println("Cliente não encontrado");
 				linhaSimples();
 			}
 			else {
 				System.out.println(cliente.toString());
 				System.out.print("Deseja modificar(S/N)?  ");
 				String resposta = leitor.next();
+				System.out.println();
 				
 				if(resposta.toCharArray()[0] == 'S' || resposta.toCharArray()[0] == 's') {
 					
@@ -827,22 +1045,25 @@ public class TerminalGUI {
 					cliente.setCLI_TELEFONE(telefone);
 					
 					ClienteDAO.updateCliente(cliente);
+					System.out.print("Cliente modificado com sucesso");
 				}
 				else {
-					System.out.println("Nenhum cliente foi modificado");
+					System.out.print("Nenhum cliente foi modificado");
 					return;
 				}
 			}
 		}
 		catch(InputMismatchException e) {
+			System.out.println();
 			linhaComposta();
-			System.out.print("VALOR DIGITADO INVALIDO");
+			System.out.println("VALOR DIGITADO INVALIDO");
 			linhaComposta();
 			leitor.nextLine(); // Limpa o buffer
 		}
 		catch(Exception e) {
+			System.out.println();
 			linhaComposta();
-			System.out.print("OCORREU UM ERRO " + e);
+			System.out.println("OCORREU UM ERRO " + e);
 			linhaComposta();
 			leitor.nextLine(); // Limpa o buffer
 		}
@@ -850,18 +1071,13 @@ public class TerminalGUI {
 
 	// LINHAS
 	private static void linhaSimples() {
-		System.out.print("\n--------------------\n");
-	}
-	
-	private static void linhaComposta() {
-		System.out.print("\n====================\n");
-	}
-	
-	private static void linhaSimplesDupla() {
-		System.out.print("\n--------------------\n");
 		System.out.print("--------------------\n");
 	}
 	
+	private static void linhaComposta() {
+		System.out.print("====================\n");
+	}
+
 	private static void linhaCompostaDupla() {
 		System.out.print("\n====================\n");
 		System.out.print("====================\n");

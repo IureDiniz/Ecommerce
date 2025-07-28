@@ -54,7 +54,7 @@ public class Cliente {
 				+ "\nNOME: " + this.getCLI_NOME()
 				+ "\nEMAIL: " + this.getCLI_EMAIL()
 				+ "\nENDERECO: " + this.getCLI_ENDERECO()
-				+ "\nETELEFONE: " + this.getCLI_TELEFONE() + "\n";
+				+ "\nETELEFONE: " + this.getCLI_TELEFONE();
 	}
 
 	public static boolean existeCliente(int codigoCliente) {
