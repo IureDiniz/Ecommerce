@@ -164,6 +164,7 @@ public class PedidoDAO {
 			pstm = (JdbcPreparedStatement) conn.prepareStatement(sql);
 			rset = pstm.executeQuery();
 			
+			// Laço que percorre todos os pedidos até salvar o último
 			while (rset.next()) {
 				Pedido aux = new Pedido();
 				
