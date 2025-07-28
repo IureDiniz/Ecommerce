@@ -52,6 +52,7 @@ public class Produto {
 		
 	}
 
+	// Interface usada no terminialGUI para listar produtos
 	public String toString() {
 		return "CODIGO: " + this.getPRO_CODIGO()
 				+ "\nNOME: " + this.getPRO_NOME()
@@ -60,6 +61,7 @@ public class Produto {
 				+ "\nESTOQUE: " + this.getPRO_ESTOQUE();
 	}
 	
+	// Interface usada no terminalGUI para listar vendas
 	public String toStringSpace() {
 		return "		CODIGO: " + this.getPRO_CODIGO()
 				+ "\n	NOME: " + this.getPRO_NOME()
@@ -67,6 +69,8 @@ public class Produto {
 				+ "\n	VALOR: R$" + this.getPRO_VALOR();
 	}
 	
+	
+	// Verifica se um produto existe
 	public static boolean existeProduto(int codigoProduto) {
 		Produto produto = ProdutoDAO.getProduto(codigoProduto);
 		if(produto.getPRO_CODIGO() == 0) {
@@ -77,6 +81,7 @@ public class Produto {
 		}
 	}
 
+	// Verifica se o produto tem estoque maior ou igual a uma quantidade definida
 	public static boolean emEstoque(int codigoProduto, int quantidade) {
 		Produto produto = ProdutoDAO.getProduto(codigoProduto);
 		if(produto.getPRO_ESTOQUE() >= quantidade) {

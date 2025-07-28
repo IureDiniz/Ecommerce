@@ -34,6 +34,6 @@ public class Pedido {
 		this.CLI_CODIGO = cliente;
 		this.PED_DATA = date;
 	}
-	
+
 	public Pedido() {}
 }

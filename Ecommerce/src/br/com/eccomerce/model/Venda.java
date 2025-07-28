@@ -54,6 +54,7 @@ public class Venda {
 			valorTotal += produto.getPRO_VALOR() * item.getPRP_QUANTIDADE();
 		}
 		saida += "\nVALOR TOTAL: R$" + valorTotal + "\n";
+		
 		return saida;
 	}
 }

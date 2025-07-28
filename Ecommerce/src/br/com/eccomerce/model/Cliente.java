@@ -57,6 +57,7 @@ public class Cliente {
 				+ "\nETELEFONE: " + this.getCLI_TELEFONE();
 	}
 
+	// Verifica se o cliente com o codigo determinado existe no bancod e dados e retorna valor booleano
 	public static boolean existeCliente(int codigoCliente) {
 		Cliente cliente = ClienteDAO.getCliente(codigoCliente);
 		if(cliente.getCLI_CODIGO() == 0) {
