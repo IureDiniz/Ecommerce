@@ -19,6 +19,7 @@ public class ClienteDAO {
 		JdbcPreparedStatement pstm = null;
 		
 		try {
+			// Faz conexão com o banco de dados
 			conn = ConnectionFactory.createConnectionToMySQL();
 			
 			// Prepara a execução de uma query
