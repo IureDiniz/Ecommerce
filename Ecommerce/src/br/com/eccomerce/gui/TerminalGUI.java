@@ -843,19 +843,24 @@ public class TerminalGUI {
 	
 	private static void modificarPedido() {
 		try {
+			// Objeto que guardará as alterações
+			Pedido pedidoNovo = new Pedido();
+			List<ProdutoPedido> produtosPedidosNovos = new ArrayList<ProdutoPedido>();
+			
+			// Busca do pedido que será modificado
 			System.out.print("Digite o código do pedido: ");
-			int codigo = leitor.nextInt();
+			int codigoPedido = leitor.nextInt();
 			
-			// Recebe o pedido e os produtoPedidos ligados a ele
-			Pedido pedido = PedidoDAO.listPedido(codigo);
-			List<ProdutoPedido> produtosPedidosAntigos = ProdutoPedidoDAO.listProdutoPedido(codigo);
+			// Objetos que trazem os dados antigos
+			Pedido pedidoAntigo = PedidoDAO.listPedido(codigoPedido);
 			
-			// Verifica se o pedido é nulo
-			if(pedido == null) {
+			// Verifica se o pedido é vazio
+			if(pedidoAntigo.getPED_CODIGO() == 0) {
 				System.out.println();
 				linhaSimples();
 				System.out.println("Pedido não encontrado");
 				linhaSimples();
+				return;
 			}
 			else {
 				int codigoCliente, codigoProduto;
@@ -874,23 +879,30 @@ public class TerminalGUI {
 					System.out.println("Cliente não encontrado");
 					linhaSimples();
 					return;
-				} 
+				}
 				else {
+					// Atualiza os dados que serão atualizados
+					pedidoNovo.setCLI_CODIGO(codigoCliente);
+					pedidoNovo.setPED_DATA(pedidoAntigo.getPED_DATA());
+					
 					System.out.print("NUMERO DE ITENS: ");
 					nItens = leitor.nextInt();
 					
-					pedido.setCLI_CODIGO(codigoCliente);
-					PedidoDAO.updatePedido(pedido);
+					if(nItens < 1) {
+						System.out.println();
+						linhaSimples();
+						System.out.println("Deve existir pelo menos um produto para cada pedido");
+						linhaSimples();
+						return;
+					}
 					
 					// Laço para adicionar os novos itens
 					for(int i = 0; i < nItens; i++) {
 						System.out.print("CODIGO DO PRODUTO: ");
 						codigoProduto = leitor.nextInt();
-						
-						Produto testaProduto = ProdutoDAO.getProduto(codigoProduto);
 			
 						// Verifica se o produto existe
-						if(testaProduto.getPRO_CODIGO() == 0) {
+						if(!Produto.existeProduto(codigoProduto)) {
 							System.out.println();
 							linhaSimples();
 							System.out.println("Produto não localizado");
@@ -901,29 +913,47 @@ public class TerminalGUI {
 							System.out.print("QUANTIDADE: ");
 							qtdeProduto = leitor.nextInt();
 							
+							// Testa se o valor posto é valido
 							if(qtdeProduto < 1) {
 								System.out.println();
 								linhaSimples();
 								System.out.println("Não é possivel fazer venda de quantidade nula ou negativa");
 								linhaSimples();
+								i--;
 							}
-							
-							// Salva os produtos novos
-							ProdutoPedido produtoPedido = new ProdutoPedido(pedido.getPED_CODIGO(), codigoProduto, qtdeProduto);
-							ProdutoPedidoDAO.saveProdutoPedido(produtoPedido);
-						}
-						
-						// Exclui os produtos antigos
-						for(ProdutoPedido item : produtosPedidosAntigos) {
-							ProdutoPedidoDAO.deleteProdutoPedido(item);
+							else {
+								ProdutoPedido produtoPedidoNovo = new ProdutoPedido(codigoPedido, codigoProduto, qtdeProduto);
+								produtosPedidosNovos.add(produtoPedidoNovo);
+							}
 						}
 					}
+					
+					Venda venda = new Venda(codigoPedido);
+					
+					// Exibe a venda, confirma a excusão e exclui todos os produtoPedidos e o pedido em sí
+					System.out.println();
+					System.out.println(venda.toStringModificada(produtosPedidosNovos));
+					System.out.print("Deseja modificar(S/N)?  ");
+					String resposta = leitor.next();
+					System.out.println();
+					
+					if(resposta.toCharArray()[0] == 'S' || resposta.toCharArray()[0] == 's') {
+						venda.modificaVenda(pedidoNovo, produtosPedidosNovos);
+						System.out.println();
+						linhaSimples();
+						System.out.println("Venda modificada com sucesso");
+						linhaSimples();
+					}
+					else {
+						System.out.println();
+						linhaSimples();
+						System.out.println("Nenhuma venda foi modificada");
+						linhaSimples();
+					}
+					
 				}
+				
 			}
-			System.out.println();
-			linhaSimples();
-			System.out.println("Venda alterada com sucesso");
-			linhaSimples();
 		}
 		catch(InputMismatchException e) {
 			System.out.println();

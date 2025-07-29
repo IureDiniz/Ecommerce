@@ -47,6 +47,46 @@ public class Venda {
 		PedidoDAO.deletePedido(pedido);
 	}
 	
+	public void modificaVenda(Pedido pedidoNovo, List<ProdutoPedido> produtosPedidosNovos) {
+		this.pedido.setCLI_CODIGO(pedidoNovo.getCLI_CODIGO());
+		this.pedido.setPED_DATA(pedidoNovo.getPED_DATA());
+		
+		for(ProdutoPedido item : this.produtos) {
+			ProdutoPedidoDAO.deleteProdutoPedido(item);
+		}
+		
+		this.produtos = produtosPedidosNovos;
+		
+		PedidoDAO.updatePedido(this.pedido);
+		
+		for(ProdutoPedido item : this.produtos) {
+			ProdutoPedidoDAO.saveProdutoPedido(item);
+		}
+		
+	}
+	
+	// método toString() usado quando se está no meio da modificação
+	public String toStringModificada( List<ProdutoPedido> produtosPedidosNovos ) {
+		Cliente cliente = ClienteDAO.getCliente(pedido.getCLI_CODIGO());
+		double valorTotal = 0;
+		
+		String saida = "PEDIDO: " + pedido.getPED_CODIGO()
+				+ "\nCLIENTE: " + cliente.getCLI_NOME()
+				+ "\nDATA: " + pedido.getPED_DATA()
+				+ "\nPRODUTOS: ";
+		
+		for(ProdutoPedido item : produtosPedidosNovos) {
+			Produto produto = ProdutoDAO.getProduto(item.getPRO_CODIGO());
+			saida += "\n      " + produto.getPRO_NOME()
+					+ "\n - PREÇO: R$" + produto.getPRO_VALOR()
+					+ "\n - QUANTIDADE: " + item.getPRP_QUANTIDADE();
+			valorTotal += produto.getPRO_VALOR() * item.getPRP_QUANTIDADE();
+		}
+		saida += "\nVALOR TOTAL: R$" + valorTotal + "\n";
+		
+		return saida;
+	}
+	
  	public String toString() {
 		Cliente cliente = ClienteDAO.getCliente(pedido.getCLI_CODIGO());
 		double valorTotal = 0;
