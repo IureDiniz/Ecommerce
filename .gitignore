@@ -1,0 +1,9 @@
+.idea/
+.metadata/
+Eccomerce/.settings/
+Eccomerce/bin/
+Eccomerce/resources/
+
+.project
+Eccomerce/.classpath
+Eccomerce/.project
