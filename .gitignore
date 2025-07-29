@@ -1,9 +1,10 @@
 .idea/
 .metadata/
-Eccomerce/.settings/
-Eccomerce/bin/
-Eccomerce/resources/
+Ecommerce/.settings/
+Ecommerce/bin/
+**/bin/
+Ecommerce/resources/
 
 .project
-Eccomerce/.classpath
-Eccomerce/.project
+Ecommerce/.classpath
+Ecommerce/.project
