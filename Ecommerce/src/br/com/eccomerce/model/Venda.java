@@ -37,7 +37,17 @@ public class Venda {
 		produtos = ProdutoPedidoDAO.listProdutoPedido(pedido.getPED_CODIGO());
 	}
 	
-	public String toString() {
+	public void deleteVenda() {
+		
+		List<ProdutoPedido> produtosPedidos = ProdutoPedidoDAO.listProdutoPedido(this.pedido.getPED_CODIGO());
+		for(ProdutoPedido item : produtosPedidos) {
+			ProdutoPedidoDAO.deleteProdutoPedido(item);
+		}
+		
+		PedidoDAO.deletePedido(pedido);
+	}
+	
+ 	public String toString() {
 		Cliente cliente = ClienteDAO.getCliente(pedido.getCLI_CODIGO());
 		double valorTotal = 0;
 		

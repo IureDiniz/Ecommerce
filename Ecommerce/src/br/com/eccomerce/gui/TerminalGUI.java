@@ -807,13 +807,22 @@ public class TerminalGUI {
 				linhaSimples();
 			}
 			else {
-				// Exclui todos os produtoPedidos e o pedido em sí
-				List<ProdutoPedido> produtosPedidos = ProdutoPedidoDAO.listProdutoPedido(codigo);
-				for(ProdutoPedido item : produtosPedidos) {
-					ProdutoPedidoDAO.deleteProdutoPedido(item);
-				}
+				Venda venda = new Venda(codigo);
 				
-				PedidoDAO.deletePedido(pedido);
+				// Exibe a venda, confirma a excusão e exclui todos os produtoPedidos e o pedido em sí
+				System.out.println(venda.toString());
+				System.out.print("Deseja excluir(S/N)?  ");
+				String resposta = leitor.next();
+				System.out.println();
+				
+				if(resposta.toCharArray()[0] == 'S' || resposta.toCharArray()[0] == 's') {
+					venda.deleteVenda();
+					System.out.println("Venda excluida com sucesso");
+				}
+				else {
+					System.out.println("Nenhuma venda foi excluida");
+				}
+
 			}
 		}
 		catch(InputMismatchException e) {
