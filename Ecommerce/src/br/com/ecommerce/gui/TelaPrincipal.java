@@ -177,8 +177,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 btnVendasActionPerformed(evt);
             }
         });
+        
 
-         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recursos/logo.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/resources/logo.png"))); // NOI18N
         jLabel1.setText("jLabel1");
 
         javax.swing.GroupLayout PainelMenuLayout = new javax.swing.GroupLayout(PainelMenu);
