@@ -1,5 +1,14 @@
 package br.com.ecommerce.gui;
 
+import java.awt.BorderLayout;
+import java.util.List;
+
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+
+import br.com.ecommerce.dao.ProdutoDAO;
+import br.com.ecommerce.model.*;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
@@ -14,6 +23,10 @@ public class TelaCadastrarProduto extends javax.swing.JPanel {
     /**
      * Creates new form TelaCadastrarProduto
      */
+
+	private JTable tabela;
+    private ProdutoDAO dao = new ProdutoDAO();
+	
     public TelaCadastrarProduto() {
         initComponents();
     }
@@ -27,6 +40,23 @@ public class TelaCadastrarProduto extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+
+         setLayout(new BorderLayout());
+
+         List<Produto> produtos = ProdutoDAO.listProduto();
+         String[] colunas = {"PRO_CODIGO", "PRO_NOME", "PRO_PRECO"};
+         Object[][] dados = new Object[produtos.size()][3];
+
+         for (int i = 0; i < produtos.size(); i++) {
+             dados[i][0] = produtos.get(i).getPRO_CODIGO();
+             dados[i][1] = produtos.get(i).getPRO_CODIGO();
+             dados[i][2] = produtos.get(i).getPRO_CODIGO();
+         }
+
+        tabela = new JTable(dados, colunas);
+        add(new JScrollPane(tabela), BorderLayout.CENTER);
+
+        
         btnSalvarProdutoCadastro = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
