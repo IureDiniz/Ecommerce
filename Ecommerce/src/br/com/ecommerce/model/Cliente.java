@@ -1,6 +1,8 @@
 package br.com.ecommerce.model;
 
 import br.com.ecommerce.dao.ClienteDAO;
+import br.com.ecommerce.dao.PedidoDAO;
+import java.util.List;
 
 public class Cliente {
 	private int CLI_CODGO;
@@ -67,4 +69,14 @@ public class Cliente {
 			return true;
 		}
 	}
+        
+        public boolean possuiPedido(){
+            List<Pedido> pedidos = PedidoDAO.listPedido();
+            for(Pedido item : pedidos){
+                if(this.getCLI_CODIGO() == item.getCLI_CODIGO()){
+                    return true;
+                }
+        }
+            return false;
+        }
 }
