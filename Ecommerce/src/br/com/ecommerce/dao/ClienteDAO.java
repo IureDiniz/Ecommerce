@@ -153,6 +153,55 @@ public class ClienteDAO {
 		return cliente;
 	}
 	
+        public static List<Cliente> listCliente(String pesquisaNome) {
+		String sql = "SELECT * FROM tbClinete WHERE CLI_NOME LIKE ?";
+		
+		List<Cliente> clientes = new ArrayList<Cliente>();
+		
+		Connection conn = null;
+		JdbcPreparedStatement pstm = null;
+		
+		
+		ResultSet rset = null;
+		
+		try {
+			conn = ConnectionFactory.createConnectionToMySQL();
+			pstm = (JdbcPreparedStatement) conn.prepareStatement(sql);
+			pstm.setString(1, "%" + pesquisaNome + "%");
+
+			rset = pstm.executeQuery();
+			
+			while (rset.next()) {
+				Cliente cliente = new Cliente();
+				
+				// Recuperar os atributos
+				cliente.setCLI_CODIGO(rset.getInt("CLI_CODIGO"));
+				cliente.setCLI_NOME(rset.getString("CLI_NOME"));
+				cliente.setCLI_EMAIL(rset.getString("CLI_EMAIL"));
+                                cliente.setCLI_ENDERECO(rset.getString("CLI_ENDERECO"));
+				cliente.setCLI_TELEFONE(rset.getString("CLI_TELEFONE"));
+				
+				clientes.add(cliente);
+			}
+			
+			pstm.execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstm != null) {
+					pstm.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return clientes;
+	}
+        
 	public static void updateCliente(Cliente cliente) {
 		String sql = "UPDATE tbCliente SET CLI_NOME = ?, CLI_EMAIL = ?, CLI_ENDERECO = ?, CLI_TELEFONE = ?" +
 					 "WHERE CLI_CODIGO = ?";
