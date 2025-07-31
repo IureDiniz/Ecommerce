@@ -8,3 +8,5 @@ Ecommerce/resources/
 .project
 Ecommerce/.classpath
 Ecommerce/.project
+/Ecommerce/nbproject/private/
+/Ecommerce/build/
