@@ -154,7 +154,7 @@ public class ClienteDAO {
 	}
 	
         public static List<Cliente> listCliente(String pesquisaNome) {
-		String sql = "SELECT * FROM tbClinete WHERE CLI_NOME LIKE ?";
+		String sql = "SELECT * FROM tbCliente WHERE CLI_NOME LIKE ?";
 		
 		List<Cliente> clientes = new ArrayList<Cliente>();
 		
