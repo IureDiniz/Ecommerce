@@ -44,6 +44,14 @@ public class Produto {
 		PRO_ESTOQUE = pRO_ESTOQUE;
 	}
 	
+        public Produto(int codigo, String nome, String descricao, double valor, int quantidade){
+                this.PRO_CODIGO = codigo;
+		this.PRO_NOME = nome;
+		this.PRO_DESCRICAO = descricao;
+		this.PRO_VALOR = valor;
+		this.PRO_ESTOQUE = quantidade;
+	}
+        
 	public Produto(String nome, String descricao, double valor, int quantidade){
 		this.PRO_NOME = nome;
 		this.PRO_DESCRICAO = descricao;

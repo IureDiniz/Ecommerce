@@ -42,6 +42,14 @@ public class Cliente {
 		CLI_TELEFONE = cLI_TELEFONE;
 	}
 
+        public Cliente(int codigo, String nome, String email, String endereco, String telefone) {
+                this.CLI_CODGO = codigo;
+		this.CLI_NOME = nome;
+		this.CLI_EMAIL = email;
+		this.CLI_ENDERECO = endereco;
+		this.CLI_TELEFONE = telefone;
+	}
+        
 	public Cliente(String nome, String email, String endereco, String telefone) {
 		this.CLI_NOME = nome;
 		this.CLI_EMAIL = email;
