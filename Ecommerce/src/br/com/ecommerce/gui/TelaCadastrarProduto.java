@@ -8,6 +8,7 @@ import javax.swing.JTable;
 
 import br.com.ecommerce.dao.ProdutoDAO;
 import br.com.ecommerce.model.*;
+import javax.swing.JOptionPane;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
@@ -40,23 +41,6 @@ public class TelaCadastrarProduto extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-
-         setLayout(new BorderLayout());
-
-         List<Produto> produtos = ProdutoDAO.listProduto();
-         String[] colunas = {"PRO_CODIGO", "PRO_NOME", "PRO_PRECO"};
-         Object[][] dados = new Object[produtos.size()][3];
-
-         for (int i = 0; i < produtos.size(); i++) {
-             dados[i][0] = produtos.get(i).getPRO_CODIGO();
-             dados[i][1] = produtos.get(i).getPRO_CODIGO();
-             dados[i][2] = produtos.get(i).getPRO_CODIGO();
-         }
-
-        tabela = new JTable(dados, colunas);
-        add(new JScrollPane(tabela), BorderLayout.CENTER);
-
-        
         btnSalvarProdutoCadastro = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
@@ -71,6 +55,11 @@ public class TelaCadastrarProduto extends javax.swing.JPanel {
         setBackground(new java.awt.Color(153, 153, 153));
 
         btnSalvarProdutoCadastro.setText("Salvar");
+        btnSalvarProdutoCadastro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarProdutoCadastroActionPerformed(evt);
+            }
+        });
 
         jLabel2.setText("Nome:");
 
@@ -134,6 +123,35 @@ public class TelaCadastrarProduto extends javax.swing.JPanel {
                 .addGap(32, 32, 32))
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnSalvarProdutoCadastroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarProdutoCadastroActionPerformed
+        // TODO add your handling code here:
+        try{
+            String nome = NomeProduto.getText();
+            String descricao = DescricaoProduto.getText();
+            
+            try{
+                double preco = Double.parseDouble(PrecoProduto.getText());
+                int estoque = Integer.parseInt(EstoqueProduto.getText());
+                
+                
+                if(nome == null || nome.isEmpty() || descricao == null || descricao.isEmpty() || preco < 0.01 || estoque < 0){
+                    JOptionPane.showInternalMessageDialog(null, "Algum dado está vazio ou é invalido\nProduto não salvo");
+                }
+                else{
+                    Produto produto = new Produto(nome, descricao, preco, estoque);
+                    ProdutoDAO.saveProduto(produto);
+                    JOptionPane.showInternalMessageDialog(null, "O produto " + produto.getPRO_NOME() + " foi salvo com sucesso");
+                }
+            }
+            catch(NumberFormatException e){
+                JOptionPane.showMessageDialog(null, "Preço ou Estoque estão em formato invalido");
+            }
+        }
+        catch(Exception e){
+            JOptionPane.showInternalMessageDialog(null, "O SEGUINTE ERRO OCORREU: " + e);
+        }
+    }//GEN-LAST:event_btnSalvarProdutoCadastroActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
