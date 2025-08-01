@@ -50,6 +50,11 @@ public class TelaEditarProduto extends javax.swing.JPanel {
         setBackground(new java.awt.Color(153, 153, 153));
 
         btnSalvarProdutoEdicao.setText("Salvar");
+        btnSalvarProdutoEdicao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarProdutoEdicaoActionPerformed(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel6.setText("Digite o produto a ser editado:");
@@ -243,6 +248,37 @@ public class TelaEditarProduto extends javax.swing.JPanel {
             JOptionPane.showInternalMessageDialog(null, "OCORREU UM ERRO: " + e);
         }
     }//GEN-LAST:event_btnExcluirProdutoEdicaoActionPerformed
+
+    private void btnSalvarProdutoEdicaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarProdutoEdicaoActionPerformed
+        // TODO add your handling code here:
+        try{
+            Produto p = ProdutoDAO.getProduto(NomeProdutoEditar.getText().trim());
+            String nome = NovoNomeProduto.getText();
+            String descricao = NovaDescricaoProduto.getText();
+            
+            try{
+                double preco = Double.parseDouble(NovoPrecoProduto.getText());
+                int estoque = Integer.parseInt(NovoEstoqueProduto.getText());
+                
+                
+                if(nome == null || nome.isEmpty() || descricao == null || descricao.isEmpty() || preco < 0.01 || estoque < 0){
+                    JOptionPane.showInternalMessageDialog(null, "Algum dado está vazio ou é invalido\nProduto não salvo");
+                }
+                else{
+                    Produto produto = new Produto(p.getPRO_CODIGO(), nome, descricao, preco, estoque);
+                    ProdutoDAO.updateProduto(produto);
+                    JOptionPane.showInternalMessageDialog(null, "O produto " + produto.getPRO_NOME() + " foi salvo com sucesso");
+                }
+            }
+            catch(NumberFormatException e){
+                JOptionPane.showMessageDialog(null, "Preço ou Estoque estão em formato invalido");
+            }
+        }
+        catch(Exception e){
+            JOptionPane.showInternalMessageDialog(null, "O SEGUINTE ERRO OCORREU: " + e);
+        }
+
+    }//GEN-LAST:event_btnSalvarProdutoEdicaoActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField NomeProdutoEditar;

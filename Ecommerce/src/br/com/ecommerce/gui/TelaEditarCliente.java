@@ -69,6 +69,11 @@ public class TelaEditarCliente extends javax.swing.JPanel {
         jLabel1.setText("Digite o Cliente a ser Editado:");
 
         btnSalvarClienteEdicao.setText("Salvar");
+        btnSalvarClienteEdicao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarClienteEdicaoActionPerformed(evt);
+            }
+        });
 
         btnExcluirClienteEdicao.setBackground(new java.awt.Color(255, 51, 51));
         btnExcluirClienteEdicao.setForeground(new java.awt.Color(255, 255, 255));
@@ -216,6 +221,30 @@ public class TelaEditarCliente extends javax.swing.JPanel {
             NovoTelefoneCliente.setText("");
         }
     }//GEN-LAST:event_btnBuscarClienteActionPerformed
+
+    private void btnSalvarClienteEdicaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarClienteEdicaoActionPerformed
+        // TODO add your handling code here:
+         try{
+             Cliente c = ClienteDAO.listCliente(NomeClienteEditar.getText()).getFirst();
+             
+            String nome = NovoNomeCliente.getText();
+            String email = NovoEmailCliente.getText();
+            String endereco = NovoEnderecoCliente.getText();
+            String telefone = NovoTelefoneCliente.getText();
+            
+            if(nome == null || nome.isEmpty() || email == null || email.isEmpty() || endereco == null || endereco.isEmpty() || telefone == null || telefone.isEmpty()){
+                JOptionPane.showInternalMessageDialog(null, "Algum dado está vazio\nCliente não salvo");
+            }
+            else{
+                Cliente cliente = new Cliente(c.getCLI_CODIGO(), nome, email, endereco, telefone);
+                ClienteDAO.updateCliente(cliente);
+                JOptionPane.showInternalMessageDialog(null, "O cliente " + cliente.getCLI_NOME() + " foi salvo com sucesso");
+            }
+        }
+        catch(Exception e){
+            JOptionPane.showInternalMessageDialog(null, "O SEGUINTE ERRO OCORREU: " + e);
+        }
+    }//GEN-LAST:event_btnSalvarClienteEdicaoActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
