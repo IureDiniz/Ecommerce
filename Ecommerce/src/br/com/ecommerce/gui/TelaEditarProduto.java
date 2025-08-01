@@ -1,5 +1,9 @@
 package br.com.ecommerce.gui;
 
+import br.com.ecommerce.dao.ProdutoDAO;
+import br.com.ecommerce.model.Produto;
+import javax.swing.JOptionPane;
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
@@ -41,6 +45,7 @@ public class TelaEditarProduto extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         NovoNomeProduto = new javax.swing.JTextField();
+        btnBuscarProduto = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(153, 153, 153));
 
@@ -71,6 +76,13 @@ public class TelaEditarProduto extends javax.swing.JPanel {
 
         jLabel4.setText("Descrição:");
 
+        btnBuscarProduto.setText("Buscar");
+        btnBuscarProduto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarProdutoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -84,7 +96,7 @@ public class TelaEditarProduto extends javax.swing.JPanel {
                     .addComponent(btnExcluirProdutoEdicao, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(96, Short.MAX_VALUE)
+                .addGap(96, 96, 96)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jLabel5)
@@ -95,13 +107,10 @@ public class TelaEditarProduto extends javax.swing.JPanel {
                             .addGroup(layout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(NovoPrecoProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
                                 .addComponent(jLabel3)
                                 .addGap(128, 128, 128)))
                         .addGap(106, 106, 106))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(NomeProdutoEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(93, 93, 93))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(jLabel6)
@@ -111,7 +120,11 @@ public class TelaEditarProduto extends javax.swing.JPanel {
                             .addComponent(jLabel4)
                             .addComponent(jLabel2)
                             .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(NovoNomeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(NovoNomeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(NomeProdutoEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 264, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnBuscarProduto)))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
@@ -120,8 +133,10 @@ public class TelaEditarProduto extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(NomeProdutoEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(NomeProdutoEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscarProduto))
+                .addGap(23, 23, 23)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(NovoNomeProduto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -149,6 +164,42 @@ public class TelaEditarProduto extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_NomeProdutoEditarActionPerformed
 
+    private void btnBuscarProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarProdutoActionPerformed
+        // TODO add your handling code here:
+        try{
+            Produto produto = ProdutoDAO.getProduto(NomeProdutoEditar.getText().trim());
+
+                System.out.println(ProdutoDAO.getProduto(NovoNomeProduto.getText()).toString());
+            
+            if(produto.getPRO_CODIGO() == 0){
+                JOptionPane.showInternalMessageDialog(null, "Produto não encontrado");
+                NovoNomeProduto.setText("");
+                NovaDescricaoProduto.setText("");
+                NovoPrecoProduto.setText("");
+                NovoEstoqueProduto.setText("");
+            }
+            else{
+                NovoNomeProduto.setText(produto.getPRO_NOME());
+                NovaDescricaoProduto.setText(produto.getPRO_DESCRICAO());
+                NovoPrecoProduto.setText(Double.toString(produto.getPRO_VALOR()));
+                NovoEstoqueProduto.setText(String.valueOf(produto.getPRO_ESTOQUE()));
+            }
+        }
+        catch(java.util.NoSuchElementException e){
+            JOptionPane.showInternalMessageDialog(null, "Produto não encontrado");
+            NovoNomeProduto.setText("");
+            NovaDescricaoProduto.setText("");
+            NovoPrecoProduto.setText("");
+            NovoEstoqueProduto.setText("");
+        }
+        catch(Exception e){
+            JOptionPane.showInternalMessageDialog(null, "OCORREU UM ERRO: " + e);
+            NovoNomeProduto.setText("");
+            NovaDescricaoProduto.setText("");
+            NovoPrecoProduto.setText("");
+            NovoEstoqueProduto.setText("");
+        }
+    }//GEN-LAST:event_btnBuscarProdutoActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField NomeProdutoEditar;
@@ -156,6 +207,7 @@ public class TelaEditarProduto extends javax.swing.JPanel {
     private javax.swing.JTextField NovoEstoqueProduto;
     private javax.swing.JTextField NovoNomeProduto;
     private javax.swing.JTextField NovoPrecoProduto;
+    private javax.swing.JButton btnBuscarProduto;
     private javax.swing.JButton btnExcluirProdutoEdicao;
     private javax.swing.JButton btnSalvarProdutoEdicao;
     private javax.swing.JLabel jLabel1;
