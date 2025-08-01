@@ -63,6 +63,11 @@ public class TelaEditarProduto extends javax.swing.JPanel {
         btnExcluirProdutoEdicao.setBackground(new java.awt.Color(255, 51, 51));
         btnExcluirProdutoEdicao.setForeground(new java.awt.Color(255, 255, 255));
         btnExcluirProdutoEdicao.setText("Excluir ");
+        btnExcluirProdutoEdicao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirProdutoEdicaoActionPerformed(evt);
+            }
+        });
 
         NovaDescricaoProduto.setColumns(20);
         NovaDescricaoProduto.setRows(5);
@@ -168,8 +173,6 @@ public class TelaEditarProduto extends javax.swing.JPanel {
         // TODO add your handling code here:
         try{
             Produto produto = ProdutoDAO.getProduto(NomeProdutoEditar.getText().trim());
-
-                System.out.println(ProdutoDAO.getProduto(NovoNomeProduto.getText()).toString());
             
             if(produto.getPRO_CODIGO() == 0){
                 JOptionPane.showInternalMessageDialog(null, "Produto não encontrado");
@@ -184,6 +187,13 @@ public class TelaEditarProduto extends javax.swing.JPanel {
                 NovoPrecoProduto.setText(Double.toString(produto.getPRO_VALOR()));
                 NovoEstoqueProduto.setText(String.valueOf(produto.getPRO_ESTOQUE()));
             }
+        }
+        catch(java.lang.NullPointerException e){
+        JOptionPane.showInternalMessageDialog(null, "Produto não encontrado");
+            NovoNomeProduto.setText("");
+            NovaDescricaoProduto.setText("");
+            NovoPrecoProduto.setText("");
+            NovoEstoqueProduto.setText("");
         }
         catch(java.util.NoSuchElementException e){
             JOptionPane.showInternalMessageDialog(null, "Produto não encontrado");
@@ -200,6 +210,39 @@ public class TelaEditarProduto extends javax.swing.JPanel {
             NovoEstoqueProduto.setText("");
         }
     }//GEN-LAST:event_btnBuscarProdutoActionPerformed
+
+    private void btnExcluirProdutoEdicaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirProdutoEdicaoActionPerformed
+        // TODO add your handling code here:
+        try{
+            double preco = Double.parseDouble(NovoPrecoProduto.getText());
+            int estoque = Integer.parseInt(NovoEstoqueProduto.getText());
+            
+            if("".equals(NovoNomeProduto.getText()) || "".equals(NovaDescricaoProduto.getText()) || "".equals(NovoEstoqueProduto.getText()) || "".equals(NovoPrecoProduto.getText())){
+                JOptionPane.showInternalMessageDialog(null, "Preencha todos os dados corretamente");
+            }
+            else{
+                Produto produto = ProdutoDAO.getProduto(NomeProdutoEditar.getText().trim());
+                
+                if(produto.possuiPedido()){
+                    JOptionPane.showInternalMessageDialog(null, "Produto possui venda\nNão pode ser excluido");
+                }
+                else{
+                    ProdutoDAO.deleteProduto(produto);
+                    JOptionPane.showInternalMessageDialog(null, "Produto excluido com sucesso");
+                    NovoNomeProduto.setText("");
+                    NovaDescricaoProduto.setText("");
+                    NovoPrecoProduto.setText("");
+                    NovoEstoqueProduto.setText("");
+                }
+            }
+        }
+        catch(NumberFormatException e){
+                JOptionPane.showMessageDialog(null, "Preço ou Estoque estão em formato invalido");
+            }
+        catch(Exception e){
+            JOptionPane.showInternalMessageDialog(null, "OCORREU UM ERRO: " + e);
+        }
+    }//GEN-LAST:event_btnExcluirProdutoEdicaoActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField NomeProdutoEditar;
