@@ -105,6 +105,54 @@ public class ProdutoDAO {
 		return produto;
 	}
 	
+        public static Produto getProduto(String pesquisaNome) {
+		String sql = "SELECT * FROM tbProduto WHERE PRO_NOME LIKE ? or PRO_DESCRICAO LIKE ?";
+		
+		Connection conn = null;
+		JdbcPreparedStatement pstm = null;
+		
+		
+		ResultSet rset = null;
+		
+		try {
+			conn = ConnectionFactory.createConnectionToMySQL();
+			pstm = (JdbcPreparedStatement) conn.prepareStatement(sql);
+			pstm.setString(1, "%" + pesquisaNome + "%");
+			pstm.setString(2, "%" + pesquisaNome + "%");
+
+			rset = pstm.executeQuery();
+			
+			while (rset.next()) {
+				Produto produto = new Produto();
+				
+				// Recuperar os atributos
+				produto.setPRO_CODIGO(rset.getInt("PRO_CODIGO"));
+				produto.setPRO_NOME(rset.getString("PRO_NOME"));
+				produto.setPRO_DESCRICAO(rset.getString("PRO_DESCRICAO"));
+				produto.setPRO_VALOR(rset.getDouble("PRO_VALOR"));
+				produto.setPRO_ESTOQUE(rset.getInt("PRO_ESTOQUE"));
+				
+				return produto;
+			}
+			
+			pstm.execute();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				if(pstm != null) {
+					pstm.close();
+				}
+				if(conn != null) {
+					conn.close();
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+                return null;
+	}
+        
 	public static void updateProduto(Produto produto) {
 	String sql = "UPDATE tbProduto SET PRO_NOME = ?, PRO_DESCRICAO = ?, PRO_VALOR = ?, PRO_ESTOQUE = ? WHERE PRO_CODIGO = ?";
 	
