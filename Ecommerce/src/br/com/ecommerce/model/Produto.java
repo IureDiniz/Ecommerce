@@ -1,6 +1,9 @@
 package br.com.ecommerce.model;
 
+import br.com.ecommerce.dao.PedidoDAO;
 import br.com.ecommerce.dao.ProdutoDAO;
+import br.com.ecommerce.dao.ProdutoPedidoDAO;
+import java.util.List;
 
 public class Produto {
 
@@ -91,4 +94,18 @@ public class Produto {
 			return false;
 		}
 	}
+        
+        // Verifica se há alguma venda com este produto
+        public boolean possuiPedido(){
+            List<Pedido> pedidos = PedidoDAO.listPedido();
+            for(Pedido pedido : pedidos){
+                List<ProdutoPedido> produtosPedidos = ProdutoPedidoDAO.listProdutoPedido(pedido.getPED_CODIGO());
+                for(ProdutoPedido produtoPedido : produtosPedidos){
+                    if(this.getPRO_CODIGO() == produtoPedido.getPRO_CODIGO()){
+                        return true;
+                    }
+                }
+        }
+            return false;
+        }
 }
