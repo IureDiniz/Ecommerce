@@ -41,7 +41,7 @@ public class TelaCadastrarCliente extends javax.swing.JPanel {
         EnderecoCliente = new javax.swing.JTextField();
         btnSalvarClienteCadastro = new javax.swing.JButton();
 
-        setBackground(new java.awt.Color(153, 153, 153));
+        setBackground(new java.awt.Color(204, 204, 204));
 
         jLabel2.setText("Nome:");
 
